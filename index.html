@@ -1,0 +1,1618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      DKAN+AI: From Catalog to Conversation — DrupalCamp Asheville 2026
+    </title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        /* CivicActions palette — dark deck */
+        --ca-blue: #162e51; /* Primary Blue — main slide background */
+        --ca-blue2: #1a4480; /* Secondary Blue — panels */
+        --ca-altblue: #005ea2; /* chips / flow steps */
+        --ca-lightblue: #9ac8ef; /* links, muted, inline code on dark */
+        --ca-code: #73b3e7; /* code-block syntax tokens */
+        --ca-red: #d83933; /* Primary Red — badges, fills */
+        --ca-red-text: #c1272d; /* Accessible red for accent text on light pop slides (AA) */
+        --ca-red2: #8b0a03; /* Deep Red — reserve */
+        --ca-gold: #fa9441; /* CA Gold — accent text/bars on navy (6.1:1) */
+        --g90: #171717;
+        --g70: #454545;
+        --g50: #757575;
+        --g30: #adadad;
+        --g10: #e6e6e6;
+        --g05: #f0f0f0;
+        --white: #ffffff;
+        --ink: #f5f5f5; /* near-white body text on dark */
+      }
+
+      .reveal {
+        font-family:
+          "Public Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
+        font-size: 30px;
+        color: var(--ink);
+        font-weight: 400;
+      }
+      .reveal .slides {
+        text-align: left;
+      }
+      .reveal .slides section {
+        padding-left: 40px;
+        padding-right: 40px;
+        box-sizing: border-box;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        color: var(--white);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        text-transform: none;
+        line-height: 1.1;
+        margin: 0 0 0.35em 0;
+      }
+      .reveal h1 {
+        font-size: 1.8em;
+      }
+      .reveal h2 {
+        font-size: 1.28em;
+      }
+      .reveal h3 {
+        font-size: 1em;
+        color: var(--white);
+      }
+      .reveal p {
+        line-height: 1.35;
+        margin: 0.35em 0;
+      }
+      .reveal ul,
+      .reveal ol {
+        margin: 0.2em 0 0.2em 1em;
+      }
+      .reveal li {
+        margin: 0.3em 0;
+        line-height: 1.3;
+      }
+      .reveal a {
+        color: var(--ca-lightblue);
+        text-decoration: underline;
+      }
+      .reveal strong {
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+      .reveal em {
+        color: var(--ca-lightblue);
+        font-style: italic;
+      }
+      .reveal code {
+        font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 0.85em;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--ca-lightblue);
+        padding: 0.06em 0.34em;
+        border-radius: 4px;
+      }
+      .reveal pre {
+        box-shadow: none;
+        width: 100%;
+        font-size: 0.62em;
+      }
+      .reveal pre code {
+        background: #0f1b2d;
+        color: var(--g05);
+        border-radius: 10px;
+        padding: 16px 20px;
+        max-height: none;
+      }
+      .reveal pre code .hljs-attr,
+      .reveal pre code .hljs-attribute {
+        color: var(--ca-code);
+      }
+      .reveal pre code .hljs-punctuation {
+        color: var(--g10);
+      }
+
+      /* accents — CA Gold (adapted for a dark background) */
+      .kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 0.62em;
+        font-weight: 800;
+        color: var(--ca-gold);
+        margin-bottom: 0.5em;
+        display: block;
+      }
+      .rule {
+        height: 6px;
+        width: 92px;
+        background: var(--ca-gold);
+        border: 0;
+        border-radius: 3px;
+        margin: 0.5em 0 0.7em;
+      }
+      .accent {
+        color: var(--ca-gold);
+      }
+      .arrow {
+        color: var(--ca-gold);
+      }
+      .muted {
+        color: var(--ca-lightblue);
+      }
+      .small {
+        font-size: 0.78em;
+      }
+      .big-number {
+        font-size: 2.6em;
+        font-weight: 800;
+        color: var(--ca-gold);
+        line-height: 1;
+        display: block;
+      }
+      .lead {
+        font-size: 1.15em;
+        color: var(--g05);
+      }
+
+      /* two-column layout */
+      .cols {
+        display: flex;
+        gap: 1.1em;
+        align-items: flex-start;
+      }
+      .col {
+        flex: 1;
+      }
+
+      /* cards — subtle raised panel on dark */
+      .card {
+        background: rgba(255, 255, 255, 0.07);
+        border-left: 6px solid var(--ca-gold);
+        border-radius: 8px;
+        padding: 0.55em 0.8em;
+        margin: 0.35em 0;
+      }
+      .card.blue {
+        border-left-color: var(--ca-lightblue);
+      }
+      .card.red {
+        border-left-color: var(--ca-red);
+      }
+      .card strong {
+        color: var(--white);
+      }
+
+      /* pills / chips */
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em;
+        margin: 0.4em 0;
+      }
+      .chip {
+        background: var(--ca-altblue);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.22em 0.8em;
+        font-size: 0.66em;
+        font-weight: 700;
+      }
+      .chip.red {
+        background: var(--ca-red);
+        color: #fff;
+      }
+      .chip.ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+      }
+
+      /* live-demo banner */
+      .demo-badge {
+        display: inline-block;
+        background: var(--ca-red);
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        font-size: 0.6em;
+        padding: 0.35em 0.85em;
+        border-radius: 6px;
+        text-transform: uppercase;
+      }
+
+      /* prompt list (demo questions) */
+      .prompts {
+        list-style: none;
+        margin: 0.4em 0 0;
+        padding: 0;
+      }
+      .prompts li {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 0.45em 0.75em;
+        margin: 0.32em 0;
+        font-size: 0.86em;
+      }
+      .prompts li::before {
+        content: "❯ ";
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+
+      /* screenshot placeholder */
+      .shot {
+        border: 2px dashed rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--ca-lightblue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.76em;
+        padding: 1.4em;
+        min-height: 2.4em;
+      }
+
+      /* product screenshot */
+      .screenshot-img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        display: block;
+      }
+
+      /* headshot photo */
+      .headshot {
+        width: 280px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center 18%;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* CivicActions logo badge */
+      .ca-logo {
+        height: 22px;
+        vertical-align: middle;
+        background: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+
+      /* wide illustrative graphics (e.g. the CSV-gap visual) */
+      .wide-visual {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: block;
+      }
+
+      /* DKAN + Drupal brand lockup */
+      .brand-lockup {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 0.9em;
+        opacity: 0.88;
+      }
+      .brand-lockup .dkan-logo {
+        height: 34px;
+        width: auto;
+        display: block;
+      }
+      .brand-lockup .brand-x {
+        color: var(--ca-lightblue);
+        font-weight: 800;
+        font-size: 0.9em;
+      }
+      .brand-lockup .drupal-logo {
+        height: 44px;
+        width: auto;
+        display: block;
+      }
+
+      /* small inline icon before a link */
+      .link-icon {
+        height: 0.85em;
+        width: auto;
+        vertical-align: -0.05em;
+        margin-right: 0.4em;
+        opacity: 0.85;
+      }
+
+      /* gap-bridge banner with overlaid step labels */
+      .gap-visual-wrap {
+        position: relative;
+        margin-top: 0.6em;
+      }
+      .gap-visual {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        object-position: center 38%;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: block;
+      }
+      .gap-label {
+        position: absolute;
+        bottom: 16px;
+        font-size: 0.85em;
+        font-weight: 800;
+        background: var(--ca-altblue);
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.35em 0.7em;
+      }
+      .gap-label.red {
+        background: var(--ca-red);
+      }
+      .gap-label-left {
+        left: 16px;
+      }
+      .gap-label-right {
+        right: 16px;
+      }
+
+      /* flow arrows */
+      .flow {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.35em;
+        font-size: 0.78em;
+        margin: 0.4em 0;
+      }
+      .flow .step {
+        background: var(--ca-altblue);
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.35em 0.65em;
+        font-weight: 700;
+      }
+      .flow .step.red {
+        background: var(--ca-red);
+        color: #fff;
+      }
+      .flow .arrow {
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+
+      /* footer */
+      .reveal .slide-footer {
+        display: none;
+      } /* superseded by a single global footer (below) */
+      .reveal .deck-footer {
+        position: absolute;
+        bottom: 13px;
+        left: 20px;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.04em;
+        z-index: 31;
+      }
+      .reveal .slide-number {
+        color: rgba(255, 255, 255, 0.55);
+        background: transparent;
+        font-size: 16px;
+      }
+      /* flip chrome dark on light (pop) slides — reveal toggles has-light-background */
+      .reveal.has-light-background .deck-footer {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .reveal.has-light-background .slide-number {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      table.mini {
+        font-size: 0.72em;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table.mini th {
+        text-align: left;
+        color: var(--ca-gold);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 0.25em 0.45em;
+      }
+      table.mini td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 0.24em 0.45em;
+      }
+
+      /* ===== POP slides: live demos on Light Invert (#F4F4F5) — flip to light theme ===== */
+      .reveal section.pop {
+        color: var(--g90);
+      }
+      .reveal section.pop h1,
+      .reveal section.pop h2,
+      .reveal section.pop h3 {
+        color: var(--ca-blue);
+      }
+      .reveal section.pop strong {
+        color: var(--ca-blue);
+      }
+      .reveal section.pop em {
+        color: var(--g70);
+      }
+      .reveal section.pop .muted,
+      .reveal section.pop .lead {
+        color: var(--g70);
+      }
+      .reveal section.pop a {
+        color: var(--ca-altblue);
+      }
+      .reveal section.pop code {
+        background: var(--g05);
+        color: var(--ca-blue2);
+      }
+      .reveal section.pop .kicker,
+      .reveal section.pop .accent,
+      .reveal section.pop .arrow,
+      .reveal section.pop .big-number,
+      .reveal section.pop table.mini th {
+        color: var(--ca-red-text);
+      }
+      .reveal section.pop .rule {
+        background: var(--ca-red);
+      }
+      .reveal section.pop .prompts li {
+        background: var(--g05);
+        border-color: var(--g10);
+        color: var(--g90);
+      }
+      .reveal section.pop .prompts li::before {
+        color: var(--ca-red);
+      }
+      .reveal section.pop table.mini td {
+        border-color: var(--g10);
+      }
+
+      /* Honor reduced-motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        .reveal .slides section,
+        .reveal.slide section {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- ============ 1. TITLE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">DrupalCamp Asheville 2026</span>
+          <h1>DKAN+AI: From Catalog to&nbsp;Conversation</h1>
+          <hr class="rule" />
+          <p class="lead">
+            AI agents on DKAN, connected with MCP (Model Context Protocol).
+          </p>
+          <p style="margin-top: 1.2em">
+            <strong>Dan Goodwin</strong> · Senior Engineer, Drupal + React ·
+            CivicActions
+          </p>
+          <p class="small muted">
+            Modules:
+            <a href="https://www.drupal.org/project/dkan_ai_query"
+              ><code>dkan_ai_query</code></a
+            >
+            &nbsp;·&nbsp;
+            <a href="https://www.drupal.org/project/dkan_mcp_server"
+              ><code>dkan_mcp_server</code></a
+            >
+          </p>
+        </section>
+
+        <!-- ============ 2. WHO I AM ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Who I am</span>
+          <h2>Dan Goodwin</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p>
+                <strong>Senior Engineer, Drupal + React<br />—</strong>
+                <img
+                  class="ca-logo"
+                  src="img/civicactions-logo.svg"
+                  alt="CivicActions"
+                /><br /><span class="muted small">Apex, NC</span>
+              </p>
+              <ul>
+                <li>
+                  Drupal since D6; now focused on
+                  <strong>federal open data</strong>
+                </li>
+                <li>
+                  I write custom <strong>DKAN AI modules</strong> and the
+                  <strong>React frontends</strong> that consume them
+                </li>
+                <li>
+                  Exploring how AI can lower the barrier between open data and
+                  the people who need it
+                </li>
+              </ul>
+              <p class="small muted">Off the clock: guitar, Aikido.</p>
+            </div>
+            <div class="col">
+              <img
+                class="headshot"
+                src="img/dan-headshot.jpg"
+                alt="Dan Goodwin"
+              />
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 3. THE PROMISE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The promise</span>
+          <h2>Open data is a simple promise</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Governments and institutions publish what they know — and let anyone
+            use it.
+          </p>
+          <ul style="margin-top: 0.6em">
+            <li>
+              In the U.S., it's often the law. Federal agencies have been
+              required to publish data <strong>open by default</strong> since a
+              2013 executive order, codified permanently by the
+              <strong>OPEN Government Data Act</strong> in 2019.
+            </li>
+          </ul>
+          <div class="chips" style="margin-top: 0.8em">
+            <span class="chip">data.gov</span>
+            <span class="chip">city &amp; county portals</span>
+            <span class="chip">health agencies</span>
+            <span class="chip">transit &amp; environment</span>
+          </div>
+          <p style="margin-top: 1em">
+            The infrastructure got <strong>good</strong> — fast APIs, reliable
+            catalogs, (sometimes) careful metadata.
+          </p>
+          <p class="accent"><strong>That's not the problem anymore.</strong></p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 4. 12M ROW CSV ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The gap</span>
+          <h2>The answer is in here somewhere</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p class="lead">
+                Somewhere in a <strong>12-million-row CSV</strong> is the number
+                a reporter, a researcher, or a neighbor came for.
+              </p>
+              <p style="margin-top: 0.8em">Getting there takes real work:</p>
+              <ul>
+                <li>knowing <strong>which question</strong> to ask</li>
+                <li>understanding <strong>what the numbers mean</strong></li>
+                <li>making sense <strong>of the answer</strong></li>
+              </ul>
+            </div>
+            <div class="col">
+              <img
+                class="wide-visual"
+                src="img/csv-gap.jpg"
+                alt="Illustration of an endless grid of spreadsheet data extending toward the horizon, with a single cell glowing orange among millions of muted ones."
+              />
+            </div>
+          </div>
+          <p class="accent" style="margin-top: 0.6em">
+            <strong>That gap is where most people stop.</strong>
+          </p>
+        </section>
+
+        <!-- ============ 5. PUBLISHED != ANSWERED ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The gap, precisely</span>
+          <h2>"Published" ≠ "answered"</h2>
+          <hr class="rule" />
+          <div class="gap-visual-wrap">
+            <img
+              class="gap-visual"
+              src="img/gap-bridge.jpg"
+              alt="Two plateaus of published data separated by a dark chasm, connected by a single glowing amber arc."
+            />
+            <span class="gap-label gap-label-left">A dataset is published</span>
+            <span class="gap-label red gap-label-right"
+              >A person got their answer</span
+            >
+          </div>
+          <p style="margin-top: 0.7em">
+            Everything after this slide is about closing
+            <span class="accent"><strong>the gap</strong></span
+            >.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 6. WHAT DKAN IS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">DKAN in four minutes</span>
+          <h2>What DKAN is</h2>
+          <hr class="rule" />
+          <ul>
+            <li>
+              The <strong>Drupal distribution for open-data catalogs</strong>,
+              in active use since 2013. Inspired by CKAN (another open-data
+              catalog platform), built on Drupal.
+            </li>
+            <li>
+              Maintained by <strong>CivicActions</strong>. Many public agencies
+              run their data portals on it.
+            </li>
+            <li>
+              <strong>DKAN 4</strong> shipped on Drupal.org in March 2026 —
+              <code>composer require drupal/dkan</code>, like any module.
+            </li>
+          </ul>
+          <div class="card">
+            <strong>Why you should care even if you'll never run DKAN:</strong>
+            it's a clean, real-world example of structured public data with an
+            API — exactly the shape AI agents are good at.
+          </div>
+          <div class="brand-lockup">
+            <img class="dkan-logo" src="img/dkan-logo-white.svg" alt="DKAN" />
+            <span class="brand-x">×</span>
+            <img
+              class="drupal-logo"
+              src="img/drupal-logo-white.svg"
+              alt="Drupal"
+            />
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 7. METASTORE + DATASTORE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">DKAN in four minutes</span>
+          <h2>Two halves: Metastore &amp; Datastore</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card blue">
+              <h3>Metastore</h3>
+              <p>
+                The records <strong>describing</strong> the data. CRUD over
+                metadata (DCAT, the standard open-data metadata format): titles,
+                descriptions, distributions, schemas.
+              </p>
+              <p class="small muted">→ tells you <em>what exists</em>.</p>
+            </div>
+            <div class="col card">
+              <h3>Datastore</h3>
+              <p>
+                The <strong>rows themselves</strong>, made queryable via the
+                DatastoreQuery endpoint.
+              </p>
+              <p class="small muted">→ lets you <em>compute on it</em>.</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.7em">
+            The AI tools <strong>discover</strong> through the metastore and
+            <strong>answer</strong> through the datastore.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 8. DSL ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">DKAN in four minutes</span>
+          <h2>The DatastoreQuery language — not raw SQL</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col" style="flex: 1.15">
+              <pre><code class="language-json" data-trim>{
+  "conditions": [
+    { "property": "region", "value": "Southeast", "operator": "=" }
+  ],
+  "properties": [
+    "park_name",
+    { "expression": { "operator": "sum",
+        "operands": ["sightings"] }, "alias": "total" }
+  ],
+  "groupings": [{ "property": "park_name" }],
+  "sorts": [{ "property": "total", "order": "desc" }]
+}</code></pre>
+            </div>
+            <div class="col">
+              <p>
+                A bounded query language: filters, sorts, pagination, and
+                aggregates (<code>sum/count/avg/min/max</code> + groupings).
+              </p>
+              <div class="card red small">
+                <strong>Deliberately bounded:</strong> no window functions,
+                subqueries, self-joins, CTEs. Remember this — the bound becomes
+                a <em>safety feature</em> later.
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 9. THREE JOBS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Why AI + open data</span>
+          <h2>The three jobs an end-user actually does</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
+            <div class="col card">
+              <span class="big-number" style="font-size: 1.4em">1</span>
+              <h3>Discover the schema</h3>
+              <p class="small">"What's even in here?"</p>
+            </div>
+            <div class="col card">
+              <span class="big-number" style="font-size: 1.4em">2</span>
+              <h3>Form the query</h3>
+              <p class="small">"How do I ask for it?"</p>
+            </div>
+            <div class="col card">
+              <span class="big-number" style="font-size: 1.4em">3</span>
+              <h3>Pick the right visualization</h3>
+              <p class="small">"What does this look like?"</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.9em">
+            These are exactly the three things that
+            <strong>stop people</strong>.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 10. MAP TO LLM ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Why AI + open data</span>
+          <h2>…map directly onto AI strengths</h2>
+          <hr class="rule" />
+          <table class="mini" style="font-size: 0.8em; margin-top: 0.3em">
+            <tr>
+              <th>The user's job</th>
+              <th></th>
+              <th>What AI is good at</th>
+            </tr>
+            <tr>
+              <td>Discover the schema</td>
+              <td class="accent">↔</td>
+              <td>reading &amp; structuring unfamiliar fields</td>
+            </tr>
+            <tr>
+              <td>Form the query</td>
+              <td class="accent">↔</td>
+              <td>translating intent into a formal query language</td>
+            </tr>
+            <tr>
+              <td>Pick the right visualization</td>
+              <td class="accent">↔</td>
+              <td>matching data shape to a chart</td>
+            </tr>
+          </table>
+          <p style="margin-top: 1em">
+            The pairing isn't a gimmick — AI models are strong at exactly the
+            <strong>interpretive layer</strong> people get stuck on. The
+            deterministic catalog underneath keeps them <strong>honest</strong>.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 11. TWO WAYS (SECTION) ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">How we'll close it</span>
+          <h2>Two ways to close the gap</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.6em">
+            <div class="col card">
+              <h3>A · End-user UX</h3>
+              <p>A chat box on the site.</p>
+              <p><code>dkan_ai_query</code></p>
+              <p class="small muted">for the visitor</p>
+            </div>
+            <div class="col card">
+              <h3>B · Agent access</h3>
+              <p>Expose the whole site to an AI agent.</p>
+              <p><code>dkan_mcp_server</code></p>
+              <p class="small muted">for the developer / operator</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.7em">
+            Same goal, two audiences — though A quietly depends on B:
+            <code>dkan_ai_query</code> builds on a submodule that ships inside
+            <code>dkan_mcp_server</code>.
+          </p>
+        </section>
+
+        <!-- ============ 12. MEET THE WIDGET ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 1 · dkan_ai_query</span>
+          <h2>Meet the chat widget</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p class="lead">
+                "Ask in plain English —
+                <em>which parks had the most bear sightings?</em> — and get an
+                answer and a table, grounded in real queries. Ask for a chart
+                and you'll get one, inline."
+              </p>
+              <ul class="small">
+                <li>
+                  A Drupal <strong>block</strong>; vanilla-JS library (no
+                  framework)
+                </li>
+                <li>
+                  Sanitized markdown · interactive tables + CSV · inline
+                  <strong>Vega-Lite</strong> charts
+                </li>
+                <li>
+                  A <strong>status pill</strong> shows the work ("Calling
+                  query_datastore…"), then the answer lands
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <img
+                class="screenshot-img"
+                src="img/widget-screenshot.png"
+                alt="Chat widget answering 'Which parks had the most bear sightings in 2024?' with a ranked table led by Great Smoky Mountains National Park at 3,066 sightings, plus sample-row and datastore-query result panels."
+              />
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            No token streaming — responses are progress-then-answer via a
+            blocking POST plus a short poll loop. Feels live; isn't SSE.
+          </aside>
+        </section>
+
+        <!-- ============ 13. LIVE DEMO 1 ============ -->
+        <section class="pop" data-background-color="#F4F4F5">
+          <span class="demo-badge">● Live demo</span>
+          <h2 style="margin-top: 0.4em">Bear sightings, asked in English</h2>
+          <hr class="rule" />
+          <p class="small muted">
+            Dataset: Bear Sightings in U.S. National Parks (2019–2024) · 96 rows
+          </p>
+          <ul class="prompts">
+            <li>Which parks had the most bear sightings in 2024?</li>
+            <li>
+              Show me the trend of bear sightings in Great Smoky Mountains
+            </li>
+            <li>Which region has the most sightings? …and the fewest?</li>
+            <li>What's the average weight of the bears?</li>
+          </ul>
+          <aside class="notes">
+            Demo runbook (live, Claude Haiku via the Drupal AI module). Beat 1:
+            ranked table — Great Smoky Mountains #1 (~3,066 in 2024). Beat 2:
+            Vega-Lite line chart — the 2020 dip (pandemic closures) recovering
+            through 2024. Beat 3: Southeast leads; the follow-up shows
+            multi-turn memory → Southwest fewest. Beat 4: structured refusal —
+            the data has sighting counts only, no weights. Fallback: the mock
+            provider replays these beats deterministically if the network or
+            API fails. Optional beat 5: grizzly vs black bear in 2023
+            (distinct_values).
+          </aside>
+        </section>
+
+        <!-- ============ 14. WHAT JUST HAPPENED ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 1 · under the hood</span>
+          <h2>What just happened</h2>
+          <hr class="rule" />
+          <div class="flow">
+            <span class="step">question</span><span class="arrow">→</span>
+            <span class="step">ai_agents loop</span><span class="arrow">→</span>
+            <span class="step">discovery tools</span
+            ><span class="arrow">→</span>
+            <span class="step red">query_datastore</span
+            ><span class="arrow">→</span>
+            <span class="step">answer + artifacts</span>
+          </div>
+          <ul style="margin-top: 0.7em">
+            <li>
+              A Drupal <strong>AI Agent</strong> (<code>ai_agents</code>, max 10
+              loops) with ~16 function-call tools.
+            </li>
+            <li>
+              Mandated workflow: find resource →
+              <strong>get schema</strong> (exact, case-sensitive columns) →
+              sample / distinct values → query.
+            </li>
+            <li class="accent">
+              <strong
+                >It never guesses column names, and never does math in its
+                head</strong
+              >
+              — every number routes through a tool.
+            </li>
+          </ul>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 15. CHARTS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 1 · under the hood</span>
+          <h2>The charts are model-authored</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p>
+                The AI writes the full chart definition via a
+                <code>create_chart</code> tool. The tool only returns a
+                placeholder — the real chart is captured on the server and drawn
+                with a charting library (<strong>Vega-Lite</strong>).
+              </p>
+            </div>
+            <div class="col">
+              <table class="mini">
+                <tr>
+                  <th>Intent</th>
+                  <th>Mark</th>
+                </tr>
+                <tr>
+                  <td>comparison</td>
+                  <td>bar</td>
+                </tr>
+                <tr>
+                  <td>trend</td>
+                  <td>line</td>
+                </tr>
+                <tr>
+                  <td>distribution</td>
+                  <td>histogram</td>
+                </tr>
+                <tr>
+                  <td>proportion</td>
+                  <td>arc</td>
+                </tr>
+                <tr>
+                  <td>correlation</td>
+                  <td>point</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.6em">
+            Chart-type selection is the model's job — "matching data shape to a
+            chart," slide 10 in practice.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 16. FROM CHAT TO AGENT ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 2 · dkan_mcp_server</span>
+          <h2>From a chat box to an agent</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Now hand the <strong>whole site</strong> to an agent.
+          </p>
+          <ul>
+            <li>
+              <strong>MCP</strong> — Model Context Protocol. A standard way for
+              an AI client (Claude Code) to discover and call tools.
+            </li>
+            <li>
+              Anthropic's open standard (Nov 2024); now under the Linux
+              Foundation's Agentic AI Foundation.
+            </li>
+            <li>
+              Tens of thousands of public MCP servers. This module makes
+              <strong>DKAN one of them.</strong>
+            </li>
+          </ul>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            MCP in one line: the USB-C port for AI tools. The module doesn't
+            reinvent the protocol — it rides the contrib mcp_server module +
+            the MCP PHP SDK.
+          </aside>
+        </section>
+
+        <!-- ============ 17. LIVE DEMO 2 ============ -->
+        <section class="pop" data-background-color="#F4F4F5">
+          <span class="demo-badge">● Live demo</span>
+          <h2 style="margin-top: 0.4em">
+            An agent explores the site like a new hire
+          </h2>
+          <hr class="rule" />
+          <p class="small muted">
+            Claude Code, connected over stdio (its terminal, not the network) ·
+            <code>drush dkan-mcp-server:serve</code>
+          </p>
+          <ul class="prompts">
+            <li>What's on this site?</li>
+            <li>What do we know about bears?</li>
+            <li>Break sightings down by bear weight</li>
+            <li>How did this data get onto the site?</li>
+          </ul>
+          <aside class="notes">
+            Demo runbook — the agent finds the same bear dataset cold. Beat 1:
+            get_site_status + get_catalog for orientation. Beat 2:
+            search_datasets("bear") → get_dataset → get_datastore_schema →
+            query_datastore with a grouping (totals by region — Southeast
+            leads); the sanity_flags block marks partial answers (row_cap_hit,
+            coverage_warning). Beat 3: "bear weight" isn't a real column — the
+            tool returns unknown_column + available_columns and the agent
+            recovers next turn. Beat 4: the harvest tools (get_harvest_plan /
+            get_harvest_runs) — a capability the chat widget doesn't have.
+            Fallback: the shipped explore_dataset MCP prompt scripts this
+            exploration.
+          </aside>
+        </section>
+
+        <!-- ============ 18. 38 TOOLS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 2 · what it exposes</span>
+          <h2>38 tools, in groups</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <span class="big-number">38</span>
+              <p>
+                <span class="chip red">25 read</span>
+                <span class="chip red" style="background: var(--ca-red)"
+                  >13 write</span
+                >
+              </p>
+              <p class="small muted">
+                One <code>#[Tool]</code> attribute plugin each. Tools are
+                <strong>thin</strong> — they forward to plain Drupal services.
+              </p>
+            </div>
+            <div class="col">
+              <table class="mini">
+                <tr>
+                  <th>Group</th>
+                  <th>#</th>
+                </tr>
+                <tr>
+                  <td>metastore (catalog)</td>
+                  <td>9</td>
+                </tr>
+                <tr>
+                  <td>datastore (query)</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>harvest</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td>write</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>status / search / resource</td>
+                  <td>4</td>
+                </tr>
+              </table>
+              <p class="small muted" style="margin-top: 0.5em">
+                3 of the "harvest" group's tools are also writes
+                (register/run/deregister) — that's where the 13 comes from.
+              </p>
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 19. SAFETY DEMO (CENTERPIECE) ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Demo 2 · permissions in action</span>
+          <h2>Same server, two connections</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card">
+              <h3>Read-only (anonymous)</h3>
+              <p><code>tools/list</code> → <strong>25 tools</strong></p>
+              <p class="small muted">the 13 writes are invisible</p>
+            </div>
+            <div class="col card">
+              <h3>Write role</h3>
+              <p><code>tools/list</code> → <strong>all 38</strong></p>
+              <p class="small muted">and <code>delete_dataset</code> works</p>
+            </div>
+          </div>
+          <div class="card" style="margin-top: 0.5em">
+            <p style="margin: 0 0 0.5em">
+              <span style="color: var(--ca-gold); font-weight: 800"
+                >Riding on mcp_server:</span
+              >
+              <span class="muted"
+                >the contrib module + the official MCP PHP SDK handle the
+                protocol, transports, and JSON-RPC plumbing.</span
+              >
+            </p>
+            <p style="margin: 0">
+              <span style="color: var(--ca-gold); font-weight: 800"
+                >dkan_mcp_server:</span
+              >
+              <span class="muted"
+                >only adds the DKAN tools and the access gate. Any MCP-aware
+                client works out of the box.</span
+              >
+            </p>
+          </div>
+          <aside class="notes">
+            The access gate is ToolAccessSubscriber: it hides inaccessible
+            tools from tools/list and 403s tools/call, enforced below the
+            transport — identical behavior over stdio and HTTP. Backed by
+            per-tool Drupal permissions, all restrict-access.
+          </aside>
+        </section>
+
+        <!-- ============ 20. THIN ADAPTER ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>The thin-adapter pattern</h2>
+          <hr class="rule" />
+          <div class="flow" style="font-size: 0.8em">
+            <span class="step">#[Tool] plugin</span><span class="arrow">→</span>
+            <span class="step">base class (DI)</span
+            ><span class="arrow">→</span>
+            <span class="step red">protocol-neutral service</span
+            ><span class="arrow">→</span>
+            <span class="step">DKAN service</span>
+          </div>
+          <p style="margin-top: 0.7em">
+            Logic lives in services; MCP is just an adapter. So the same
+            <code>dkan_query_tools</code> layer backs <strong>both</strong> the
+            MCP tools <strong>and</strong> the <code>dkan_ai_query</code> agent.
+          </p>
+          <div class="card">
+            <strong>Build the capability once, expose it twice.</strong>
+            <span class="muted"
+              >dkan_ai_query depends on the dkan_query_tools submodule.</span
+            >
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            The MCP tool and the AI-agent function-call are both ~10-line
+            adapters over one service method. Adding a new surface later is an
+            adapter, not a rewrite.
+          </aside>
+        </section>
+
+        <!-- ============ 21. TOOL CALL ROUTES ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>How a tool call routes</h2>
+          <hr class="rule" />
+          <div class="flow" style="font-size: 0.72em">
+            <span class="step">stdio / HTTP</span><span class="arrow">→</span>
+            <span class="step">MCP SDK · JSON-RPC</span
+            ><span class="arrow">→</span>
+            <span class="step">resolve #[Tool]</span
+            ><span class="arrow">→</span>
+            <span class="step red">access gate</span
+            ><span class="arrow">→</span>
+            <span class="step">execute() → Drupal service</span
+            ><span class="arrow">→</span>
+            <span class="step">structured result</span>
+          </div>
+          <ul style="margin-top: 0.7em">
+            <li>
+              <strong>No agentic loop in the server.</strong> It only serves
+              tools; the agent (Claude Code) drives the loop.
+            </li>
+            <li>
+              Rides contrib <code>mcp_server</code> + the MCP PHP SDK — it
+              doesn't reimplement the protocol or transports.
+            </li>
+            <li>
+              Both <strong>stdio and HTTP</strong> supported; the access gate
+              sits below both, so permissions hold locally <em>and</em> over the
+              network.
+            </li>
+          </ul>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            The HTTP transport is where "any DKAN site becomes an AI data
+            source" lives — the same access gate makes it safe over the
+            network.
+          </aside>
+        </section>
+
+        <!-- ============ 22. TOKEN USAGE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>Keeping token usage reasonable</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <ul class="small">
+                <li>
+                  <strong>Row caps</strong> everywhere: ≤500 datastore, ≤100
+                  metastore, ≤50 search
+                </li>
+                <li>
+                  <strong>Truncated</strong> descriptions (200 chars);
+                  <code>spatial</code> fields dropped
+                </li>
+                <li>
+                  <strong>Compact output schemas</strong> — small predictable
+                  envelopes, not raw dumps
+                </li>
+                <li>
+                  Expensive catalog read is <strong>permanently cached</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="col card">
+              <strong>Errors come back structured.</strong>
+              <p class="small">
+                An <code>unknown_column</code> error carries
+                <code>available_columns</code> — the agent fixes itself in
+                <em>one</em> turn instead of round-tripping. Cheaper and faster.
+              </p>
+            </div>
+          </div>
+          <p class="small muted">The whole design assumes tokens cost money.</p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Structured errors give self-correction without a human or an extra
+            planning round-trip — it's why the demo self-heals when fed a bad
+            column.
+          </aside>
+        </section>
+
+        <!-- ============ 23. WHERE AI LIVES ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>Where the AI actually lives</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card blue">
+              <h3><code>dkan_ai_query</code></h3>
+              <p>
+                The AI model lives here — via the Drupal
+                <strong>AI module + AI Agents</strong>.
+              </p>
+              <p class="small muted">This module <em>is</em> an agent.</p>
+            </div>
+            <div class="col card">
+              <h3><code>dkan_mcp_server</code></h3>
+              <p><strong>No AI model at all.</strong> A pure tool server.</p>
+              <p class="small muted">This module <em>serves</em> an agent.</p>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.5em">
+            Keys live in the Drupal <code>key</code> module, never in code.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 24. COST & LATENCY ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The hard parts · being honest</span>
+          <h2>Cost &amp; latency</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p>
+                <span class="big-number" style="font-size: 1.6em">3–30s</span
+                ><span class="muted small"> per turn</span>
+              </p>
+              <ul class="small">
+                <li>
+                  Each turn <strong>holds a server process</strong> the whole
+                  time it's thinking — no background job, no cancel button yet
+                </li>
+              </ul>
+            </div>
+            <div class="col card">
+              <strong>The tradeoff:</strong>
+              <p class="small">
+                More concurrent conversations needs more server capacity. Cheap
+                models for the small jobs, and a mock mode for demos, keep costs
+                down.
+              </p>
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Under the hood it's PHP-FPM: pm.max_children, timeouts, and
+            buffering are the actual scaling levers for the worker-per-turn
+            model.
+          </aside>
+        </section>
+
+        <!-- ============ 25. TRUST ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The hard parts · earning trust</span>
+          <h2>Grounding, refusals, sanity flags</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <ul class="small">
+                <li>
+                  Every number <strong>traces to a tool result</strong> — not
+                  model memory
+                </li>
+                <li>
+                  Refusals are a <strong>typed enum</strong>, not free text (so
+                  they're scorable)
+                </li>
+                <li>
+                  Results carry sanity flags like <code>zero_rows</code> and
+                  <code>row_cap_hit</code> — and more
+                </li>
+                <li>
+                  <strong>Deterministic checks beat prompt-pleading</strong> — a
+                  prompt fix alone couldn't stop a JSON-encoding bug; only a
+                  server-side validator did
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <p class="small muted">
+                This is how you make an answer <strong>defensible</strong> to a
+                reporter or researcher.
+              </p>
+              <div class="card">
+                <span class="big-number" style="font-size: 1.3em"
+                  >40% → 100%</span
+                >
+                <p class="small">
+                  eval-harness pass rate across five phases. Query-limit false
+                  confidence: 30% → 0%.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Eval arc: a 10-case golden set went from 40% to 100%, and
+            confidently-wrong answers on DSL limitations went to zero. The
+            JSON bug behind the validator bullet: both Claude Haiku and
+            GPT-5-mini emitted HTML-encoded &gt; (and an empty string for
+            "less than") in tool-call JSON; a prompt instruction didn't fix it
+            across three trials per model — the server-side validateOperators()
+            did. Paired with a 3-strikes unknown-column guard.
+          </aside>
+        </section>
+
+        <!-- ============ 26. WRITE SAFETY ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker"
+            >The hard parts · a write-enabled MCP server</span
+          >
+          <h2>Two gates, composed</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card blue">
+              <h3>Who — permissions</h3>
+              <p class="small">
+                Edit, delete, drop, and harvest are each their own Drupal
+                permission grant. stdio defaults to
+                <strong>anonymous = read-only</strong>; the same rule applies
+                over HTTP via OAuth scopes.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>What's on — tool groups</h3>
+              <p class="small">
+                Toggle whole subsystems on/off. A disabled group is hidden and
+                rejected. Destructive tools (delete, drop, full-replace update,
+                merge-patch) are flagged honestly.
+              </p>
+            </div>
+          </div>
+          <div class="card red small" style="margin-top: 0.4em">
+            <strong>Honest caveat:</strong> <code>--user=</code> stdio elevation
+            is "same trust level as <code>drush uli</code>" — never expose
+            beyond a trusted shell.
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 27. TRANSITION ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Close</span>
+          <h2>Open data is in its own transition</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Like the developer learning to work with AI agents, open data is
+            mid-transition too.
+          </p>
+          <p style="margin-top: 1em">
+            The question isn't whether these tools <strong>replace</strong> the
+            platforms we've built.
+          </p>
+          <p class="accent" style="font-size: 1.15em">
+            <strong
+              >It's whether we can help the data we've already published finally
+              reach the people it's for.</strong
+            >
+          </p>
+        </section>
+
+        <!-- ============ 28. TAKEAWAYS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Close</span>
+          <h2>Three things to take home</h2>
+          <hr class="rule" />
+          <ol style="font-size: 1.05em; margin-top: 0.4em">
+            <li>
+              The gap is <strong>interpretation</strong>, not infrastructure.
+            </li>
+            <li>
+              The catalog keeps the AI <strong>honest</strong>; the AI makes the
+              catalog <strong>reachable</strong>.
+            </li>
+            <li>
+              <strong>Determinism</strong> where it counts,
+              <strong>AI</strong> where it helps.
+            </li>
+          </ol>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+        </section>
+
+        <!-- ============ 29. RESOURCES / Q&A ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Thank you</span>
+          <h1>Questions?</h1>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p class="small">
+                <strong>Modules</strong><br />
+                <a href="https://www.drupal.org/project/dkan_ai_query"
+                  ><code>dkan_ai_query</code></a
+                ><br />
+                <a href="https://www.drupal.org/project/dkan_mcp_server"
+                  ><code>dkan_mcp_server</code></a
+                >
+              </p>
+              <p class="small">
+                <strong>DKAN</strong> ·
+                <a href="https://www.drupal.org/project/dkan"
+                  >drupal.org/project/dkan</a
+                >
+                ·
+                <a href="https://getdkan.org">getdkan.org</a><br />
+                <strong>MCP</strong> ·
+                <a href="https://modelcontextprotocol.io"
+                  >modelcontextprotocol.io</a
+                >
+              </p>
+            </div>
+            <div class="col">
+              <p class="small">
+                <strong>Dan Goodwin</strong> · CivicActions<br />
+                <img class="link-icon" src="img/github-logo-white.svg" alt="" />
+                <a href="https://github.com/dcgoodwin2112"
+                  >github.com/dcgoodwin2112</a
+                ><br />
+                <img class="link-icon" src="img/drupal-logo-white.svg" alt="" />
+                <a href="https://www.drupal.org/u/dcgoodwin"
+                  >drupal.org/u/dcgoodwin</a
+                ><br />
+                <img
+                  class="link-icon"
+                  src="img/linkedin-logo-white.svg"
+                  alt=""
+                />
+                <a href="https://www.linkedin.com/in/dcgoodwin2112"
+                  >linkedin.com/in/dcgoodwin2112</a
+                ><br />
+                <img
+                  class="link-icon"
+                  src="img/website-icon-white.svg"
+                  alt=""
+                />
+                <a href="https://whobroketheinternet.com"
+                  >whobroketheinternet.com</a
+                >
+              </p>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.8em">
+            Demo site is live — throw "can it do X?" questions at it.
+          </p>
+        </section>
+      </div>
+      <!-- .slides -->
+      <div class="deck-footer">
+        DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+      </div>
+    </div>
+    <!-- .reveal -->
+
+    <script>
+      // Headless Chrome throttles requestAnimationFrame, which stalls
+      // reveal's print-view activation; fall back to timers for PDF export.
+      if (/print-pdf/gi.test(window.location.search)) {
+        window.requestAnimationFrame = (cb) => setTimeout(cb, 16);
+      }
+    </script>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.055,
+        minScale: 0.2,
+        maxScale: 2.0,
+        hash: true,
+        slideNumber: "c/t",
+        controlsLayout: "edges",
+        transition: "fade",
+        transitionSpeed: "fast",
+        plugins: [RevealNotes, RevealHighlight],
+      });
+    </script>
+  </body>
+</html>

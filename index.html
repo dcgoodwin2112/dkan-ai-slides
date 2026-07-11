@@ -402,6 +402,20 @@
         color: var(--ca-gold);
         font-weight: 800;
       }
+      /* One-row variant: never wrap the flow itself; wrap text inside the
+         step pills instead. */
+      .flow.oneline {
+        flex-wrap: nowrap;
+      }
+      .flow.oneline .step {
+        min-width: 0;
+        text-align: center;
+        line-height: 1.25;
+        padding: 0.3em 0.5em;
+      }
+      .flow.oneline .arrow {
+        flex: 0 0 auto;
+      }
 
       /* footer */
       .reveal .slide-footer {
@@ -604,6 +618,62 @@
           <div class="slide-footer">
             DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
           </div>
+        </section>
+
+        <!-- ============ 3b. FAIR PRINCIPLES ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The promise · what good looks like</span>
+          <h2>The bar the community set: FAIR</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
+            <div class="col card">
+              <h3>F<span class="muted">indable</span></h3>
+              <p class="small">
+                Rich metadata in searchable catalogs; stable identifiers.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>A<span class="muted">ccessible</span></h3>
+              <p class="small">
+                Retrievable over standard, open protocols — plain HTTP APIs.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>I<span class="muted">nteroperable</span></h3>
+              <p class="small">
+                Shared formats and vocabularies — CSV, JSON, DCAT.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>R<span class="muted">eusable</span></h3>
+              <p class="small">
+                Open licenses, provenance, documentation — data dictionaries.
+              </p>
+            </div>
+          </div>
+          <p style="margin-top: 0.9em">
+            Written for <strong>machines as much as people</strong> — which is
+            about to matter.
+          </p>
+          <p class="accent">
+            <strong
+              >FAIR gets data to the doorstep. It still doesn't answer a
+              question.</strong
+            >
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            FAIR: coined 2016 (Wilkinson et al.) in the research-data
+            community; now shared language across government open data.
+            DKAN's feature set maps onto it directly: metastore + search =
+            Findable, public APIs = Accessible, DCAT + a queryable datastore =
+            Interoperable, licenses + data dictionaries = Reusable.
+            "Machine-actionable" is the property AI agents exploit for the
+            rest of the talk — and the closing line is the bridge to the gap
+            slides: FAIR-perfect data still leaves the interpretation gap.
+          </aside>
         </section>
 
         <!-- ============ 4. 12M ROW CSV ============ -->
@@ -866,6 +936,50 @@
           </p>
         </section>
 
+        <!-- ============ 11b. DRUPAL AI: INSIDE & OUTSIDE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">How we'll close it · the Drupal AI Initiative</span>
+          <h2>Drupal has names for these two ways</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.6em">
+            <div class="col card blue">
+              <h3>Inside AI</h3>
+              <p>
+                People use AI <strong>inside</strong> Drupal — assistants,
+                in-product workflows, page building.
+              </p>
+              <p><code>dkan_ai_query</code> is Inside AI for open data.</p>
+            </div>
+            <div class="col card">
+              <h3>Outside AI</h3>
+              <p>
+                Agents use Drupal <strong>from outside</strong> — connect,
+                inspect, change, verify.
+              </p>
+              <p><code>dkan_mcp_server</code> is Outside AI for open data.</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.7em">
+            The bridge between them: <code>dkan_query_tools</code> — one
+            protocol-neutral service layer that both workstreams consume.
+          </p>
+          <p class="small muted">
+            Drupal AI Initiative, June 2026: one roadmap, two workstreams.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            The split is weeks old — announced June 25, 2026, a year into the
+            initiative (30+ orgs, 50+ contributors, $1.5M+ pledged). Dries'
+            one-liner for Outside AI: "a person uses an agent, and the agent
+            uses Drupal." Punchline for this crowd: these modules weren't built
+            to match the strategy — the strategy put names on a split that
+            community modules were already converging on. DKAN ships a working
+            example of both workstreams today.
+          </aside>
+        </section>
+
         <!-- ============ 12. MEET THE WIDGET ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Demo 1 · dkan_ai_query</span>
@@ -1022,7 +1136,7 @@
           </div>
           <p class="small muted" style="margin-top: 0.6em">
             Chart-type selection is the model's job — "matching data shape to a
-            chart," slide 10 in practice.
+            chart," the AI-strengths mapping in practice.
           </p>
           <div class="slide-footer">
             DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
@@ -1167,26 +1281,10 @@
               <p class="small muted">and <code>delete_dataset</code> works</p>
             </div>
           </div>
-          <div class="card" style="margin-top: 0.5em">
-            <p style="margin: 0 0 0.5em">
-              <span style="color: var(--ca-gold); font-weight: 800"
-                >Riding on mcp_server:</span
-              >
-              <span class="muted"
-                >the contrib module + the official MCP PHP SDK handle the
-                protocol, transports, and JSON-RPC plumbing.</span
-              >
-            </p>
-            <p style="margin: 0">
-              <span style="color: var(--ca-gold); font-weight: 800"
-                >dkan_mcp_server:</span
-              >
-              <span class="muted"
-                >only adds the DKAN tools and the access gate. Any MCP-aware
-                client works out of the box.</span
-              >
-            </p>
-          </div>
+          <p style="margin-top: 0.7em">
+            Any <strong>MCP-aware client</strong> works out of the box — the
+            gate, not the client, decides what's visible.
+          </p>
           <aside class="notes">
             The access gate is ToolAccessSubscriber: it hides inaccessible
             tools from tools/list and 403s tools/call, enforced below the
@@ -1195,128 +1293,7 @@
           </aside>
         </section>
 
-        <!-- ============ 20. THIN ADAPTER ============ -->
-        <section data-background-color="#162E51">
-          <span class="kicker">Architecture · for the developers</span>
-          <h2>The thin-adapter pattern</h2>
-          <hr class="rule" />
-          <div class="flow" style="font-size: 0.8em">
-            <span class="step">#[Tool] plugin</span><span class="arrow">→</span>
-            <span class="step">base class (DI)</span
-            ><span class="arrow">→</span>
-            <span class="step red">protocol-neutral service</span
-            ><span class="arrow">→</span>
-            <span class="step">DKAN service</span>
-          </div>
-          <p style="margin-top: 0.7em">
-            Logic lives in services; MCP is just an adapter. So the same
-            <code>dkan_query_tools</code> layer backs <strong>both</strong> the
-            MCP tools <strong>and</strong> the <code>dkan_ai_query</code> agent.
-          </p>
-          <div class="card">
-            <strong>Build the capability once, expose it twice.</strong>
-            <span class="muted"
-              >dkan_ai_query depends on the dkan_query_tools submodule.</span
-            >
-          </div>
-          <div class="slide-footer">
-            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
-          </div>
-          <aside class="notes">
-            The MCP tool and the AI-agent function-call are both ~10-line
-            adapters over one service method. Adding a new surface later is an
-            adapter, not a rewrite.
-          </aside>
-        </section>
-
-        <!-- ============ 21. TOOL CALL ROUTES ============ -->
-        <section data-background-color="#162E51">
-          <span class="kicker">Architecture · for the developers</span>
-          <h2>How a tool call routes</h2>
-          <hr class="rule" />
-          <div class="flow" style="font-size: 0.72em">
-            <span class="step">stdio / HTTP</span><span class="arrow">→</span>
-            <span class="step">MCP SDK · JSON-RPC</span
-            ><span class="arrow">→</span>
-            <span class="step">resolve #[Tool]</span
-            ><span class="arrow">→</span>
-            <span class="step red">access gate</span
-            ><span class="arrow">→</span>
-            <span class="step">execute() → Drupal service</span
-            ><span class="arrow">→</span>
-            <span class="step">structured result</span>
-          </div>
-          <ul style="margin-top: 0.7em">
-            <li>
-              <strong>No agentic loop in the server.</strong> It only serves
-              tools; the agent (Claude Code) drives the loop.
-            </li>
-            <li>
-              Rides contrib <code>mcp_server</code> + the MCP PHP SDK — it
-              doesn't reimplement the protocol or transports.
-            </li>
-            <li>
-              Both <strong>stdio and HTTP</strong> supported; the access gate
-              sits below both, so permissions hold locally <em>and</em> over the
-              network.
-            </li>
-          </ul>
-          <div class="slide-footer">
-            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
-          </div>
-          <aside class="notes">
-            The HTTP transport is where "any DKAN site becomes an AI data
-            source" lives — the same access gate makes it safe over the
-            network.
-          </aside>
-        </section>
-
-        <!-- ============ 22. TOKEN USAGE ============ -->
-        <section data-background-color="#162E51">
-          <span class="kicker">Architecture · for the developers</span>
-          <h2>Keeping token usage reasonable</h2>
-          <hr class="rule" />
-          <div class="cols">
-            <div class="col">
-              <ul class="small">
-                <li>
-                  <strong>Row caps</strong> everywhere: ≤500 datastore, ≤100
-                  metastore, ≤50 search
-                </li>
-                <li>
-                  <strong>Truncated</strong> descriptions (200 chars);
-                  <code>spatial</code> fields dropped
-                </li>
-                <li>
-                  <strong>Compact output schemas</strong> — small predictable
-                  envelopes, not raw dumps
-                </li>
-                <li>
-                  Expensive catalog read is <strong>permanently cached</strong>
-                </li>
-              </ul>
-            </div>
-            <div class="col card">
-              <strong>Errors come back structured.</strong>
-              <p class="small">
-                An <code>unknown_column</code> error carries
-                <code>available_columns</code> — the agent fixes itself in
-                <em>one</em> turn instead of round-tripping. Cheaper and faster.
-              </p>
-            </div>
-          </div>
-          <p class="small muted">The whole design assumes tokens cost money.</p>
-          <div class="slide-footer">
-            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
-          </div>
-          <aside class="notes">
-            Structured errors give self-correction without a human or an extra
-            planning round-trip — it's why the demo self-heals when fed a bad
-            column.
-          </aside>
-        </section>
-
-        <!-- ============ 23. WHERE AI LIVES ============ -->
+        <!-- ============ 20. WHERE AI LIVES ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Architecture · for the developers</span>
           <h2>Where the AI actually lives</h2>
@@ -1342,6 +1319,168 @@
           <div class="slide-footer">
             DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
           </div>
+        </section>
+
+        <!-- ============ 20b. BUILT ON THE ECOSYSTEM ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>Built on the Drupal AI ecosystem</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.4em">
+            <div class="col card blue">
+              <h3><code>dkan_ai_query</code></h3>
+              <p class="small">
+                Built on <strong><code>ai</code> + <code>ai_agents</code></strong> —
+                the AI Initiative's foundation modules.
+              </p>
+              <p class="small">
+                Works with <strong>any provider module</strong> — swap by
+                settings, not code:
+              </p>
+              <div class="chips">
+                <span class="chip">Anthropic</span>
+                <span class="chip">OpenAI</span>
+                <span class="chip">local — LM Studio / Ollama</span>
+                <span class="chip">…</span>
+              </div>
+            </div>
+            <div class="col card">
+              <h3><code>dkan_mcp_server</code></h3>
+              <p class="small">
+                Built on contrib <strong><code>mcp_server</code></strong> + the
+                official <strong>MCP PHP SDK</strong>.
+              </p>
+              <p class="small">
+                Protocol, transports, JSON-RPC — all upstream. This module adds
+                only the <strong>DKAN tools</strong> and the
+                <strong>access gate</strong>.
+              </p>
+            </div>
+          </div>
+          <p style="margin-top: 0.7em">
+            The DKAN modules are a <strong>domain layer</strong> on community
+            foundations — no bespoke LLM plumbing, no bespoke protocol code.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            The ecosystem-credit beat, completing the Inside/Outside slide:
+            these aren't just the Initiative's names, they're its modules.
+            Everything model-facing (provider auth, streaming, function-call
+            plumbing, the agent loop) comes from ai + ai_agents — swapping
+            Claude for a local Gemma via LM Studio is a settings change, which
+            is also the on-prem/data-sovereignty answer for gov audiences. On
+            the MCP side, the module pins contrib mcp_server (2.x) + mcp/sdk;
+            no protocol code lives in dkan_mcp_server.
+          </aside>
+        </section>
+
+        <!-- ============ 21. BUILD ONCE, EXPOSE TWICE (merged) ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>Build once, expose twice</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.4em">
+            <div class="col card blue">
+              <h3>Chat widget</h3>
+              <p class="small">
+                Inside AI — the agent loop runs <strong>in Drupal</strong>
+                (<code>ai_agents</code>).
+              </p>
+            </div>
+            <div class="col card">
+              <h3>MCP client</h3>
+              <p class="small">
+                Outside AI — the loop runs <strong>in the client</strong>; the
+                server only serves tools.
+              </p>
+            </div>
+          </div>
+          <p
+            style="
+              text-align: center;
+              margin: 0.1em 0;
+              color: var(--ca-gold);
+              font-weight: 800;
+            "
+          >
+            ↘ &nbsp;&nbsp; ↙
+          </p>
+          <div
+            class="flow oneline"
+            style="font-size: 0.78em; justify-content: center"
+          >
+            <span class="step red"
+              >dkan_query_tools · plain Drupal services</span
+            >
+            <span class="arrow">→</span>
+            <span class="step">DKAN metastore / datastore</span>
+          </div>
+          <p style="margin-top: 0.6em">
+            Each surface is a <strong>~10-line adapter</strong> over the same
+            service methods — a future protocol is an adapter, not a rewrite.
+          </p>
+          <p class="small muted">
+            The permission gate from the demo sits
+            <strong>below both transports</strong> — stdio and HTTP behave
+            identically.
+          </p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Request path, if asked: stdio/HTTP → MCP SDK (JSON-RPC) → resolve
+            the #[Tool] plugin → access gate (ToolAccessSubscriber) →
+            execute() → service → structured result. Tools are #[Tool]
+            attribute plugins over per-subsystem base classes (DI). Rides
+            contrib mcp_server + the official MCP PHP SDK — no protocol code in
+            this module. The HTTP transport is where "any DKAN site becomes an
+            AI data source" lives. dkan_ai_query depends on the
+            dkan_query_tools submodule that ships inside dkan_mcp_server.
+          </aside>
+        </section>
+
+        <!-- ============ 22. TOKEN USAGE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Architecture · for the developers</span>
+          <h2>Keeping token usage reasonable</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <ul class="small">
+                <li>
+                  <strong>Row caps</strong> everywhere: ≤500 datastore, ≤100
+                  metastore, ≤50 search
+                </li>
+                <li>
+                  <strong>Truncated</strong> descriptions (200 chars); heavy
+                  <code>spatial</code> fields dropped
+                </li>
+                <li>
+                  The expensive catalog read is
+                  <strong>permanently cached</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="col card">
+              <strong>Errors come back structured.</strong>
+              <p class="small">
+                An <code>unknown_column</code> error carries
+                <code>available_columns</code> — the agent fixes itself in
+                <em>one</em> turn instead of round-tripping. Cheaper and faster.
+              </p>
+            </div>
+          </div>
+          <p class="small muted">The whole design assumes tokens cost money.</p>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Structured errors give self-correction without a human or an extra
+            planning round-trip — it's why the demo self-heals when fed a bad
+            column.
+          </aside>
         </section>
 
         <!-- ============ 24. COST & LATENCY ============ -->
@@ -1394,17 +1533,13 @@
                   model memory
                 </li>
                 <li>
-                  Refusals are a <strong>typed enum</strong>, not free text (so
-                  they're scorable)
+                  Refusals and errors are <strong>typed</strong> — enums and
+                  sanity flags (<code>zero_rows</code>,
+                  <code>row_cap_hit</code>), so they're scorable
                 </li>
                 <li>
-                  Results carry sanity flags like <code>zero_rows</code> and
-                  <code>row_cap_hit</code> — and more
-                </li>
-                <li>
-                  <strong>Deterministic checks beat prompt-pleading</strong> — a
-                  prompt fix alone couldn't stop a JSON-encoding bug; only a
-                  server-side validator did
+                  <strong>Deterministic validators where prompts fail</strong> —
+                  a server-side check fixed what three prompt rewrites couldn't
                 </li>
               </ul>
             </div>
@@ -1438,29 +1573,78 @@
           </aside>
         </section>
 
+        <!-- ============ 25b. EVALS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The hard parts · proving it</span>
+          <h2>How we know it works</h2>
+          <hr class="rule" />
+          <div class="flow oneline" style="font-size: 0.78em">
+            <span class="step">edit the prompt → v14</span>
+            <span class="arrow">→</span>
+            <span class="step red">run the eval — 30-case golden set</span>
+            <span class="arrow">→</span>
+            <span class="step">pass? ship &amp; sync</span>
+          </div>
+          <ul style="margin-top: 0.7em">
+            <li>
+              The system prompt is a <strong>versioned file</strong>
+              (<code>v13</code> today) — not a config blob tweaked in prod
+            </li>
+            <li>
+              30 cases run against the <strong>live agent</strong>: expected
+              answers, expected <em>refusals</em>, forbidden patterns
+            </li>
+            <li>
+              Every stored answer records its
+              <strong>prompt version + tool calls</strong> — regressions are
+              traceable after the fact
+            </li>
+          </ul>
+          <div class="card" style="margin-top: 0.5em">
+            <strong>CI for the AI layer.</strong>
+            <span class="muted"
+              >Same discipline as code: version it, test it, then ship
+              it.</span
+            >
+          </div>
+          <div class="slide-footer">
+            DKAN+AI: From Catalog to Conversation · DrupalCamp Asheville 2026
+          </div>
+          <aside class="notes">
+            Mechanics: drush dkan-aiq:eval runs the golden set (defaults to
+            Claude Haiku); dkan-aiq:sync-prompt copies the versioned file into
+            the agent config; each bump ships a hook_update. Case types: data
+            answers, refusal correctness (DSL limits, write requests), data
+            dictionary lookups. War story if time: the v12 prompt compression
+            kept every rule but cut worked examples — pass rate collapsed
+            until the compact examples went back in. Lesson: for small models
+            the examples are load-bearing, and only the eval caught it.
+            Intuition doesn't.
+          </aside>
+        </section>
+
         <!-- ============ 26. WRITE SAFETY ============ -->
         <section data-background-color="#162E51">
           <span class="kicker"
             >The hard parts · a write-enabled MCP server</span
           >
-          <h2>Two gates, composed</h2>
+          <h2>Who can write, and what's switched on</h2>
           <hr class="rule" />
           <div class="cols">
             <div class="col card blue">
               <h3>Who — permissions</h3>
               <p class="small">
-                Edit, delete, drop, and harvest are each their own Drupal
-                permission grant. stdio defaults to
-                <strong>anonymous = read-only</strong>; the same rule applies
-                over HTTP via OAuth scopes.
+                Edit, delete, drop, harvest — each its own Drupal permission.
+                stdio defaults to <strong>anonymous = read-only</strong>; OAuth
+                scopes enforce the same over HTTP.
               </p>
             </div>
             <div class="col card">
               <h3>What's on — tool groups</h3>
               <p class="small">
-                Toggle whole subsystems on/off. A disabled group is hidden and
-                rejected. Destructive tools (delete, drop, full-replace update,
-                merge-patch) are flagged honestly.
+                Toggle whole subsystems. A disabled group is hidden
+                <em>and</em> rejected. Destructive tools (delete, drop, full
+                replace) are flagged honestly.
               </p>
             </div>
           </div>

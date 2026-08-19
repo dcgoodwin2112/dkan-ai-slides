@@ -1,0 +1,1770 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Tools, Resources, Prompts — Drupal AI Learners Club 2026
+    </title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        /* CivicActions palette — dark deck */
+        --ca-blue: #162e51; /* Primary Blue — main slide background */
+        --ca-blue2: #1a4480; /* Secondary Blue — panels */
+        --ca-altblue: #005ea2; /* chips / flow steps */
+        --ca-lightblue: #9ac8ef; /* links, muted, inline code on dark */
+        --ca-code: #73b3e7; /* code-block syntax tokens */
+        --ca-red: #d83933; /* Primary Red — badges, fills */
+        --ca-red-text: #c1272d; /* Accessible red for accent text on light pop slides (AA) */
+        --ca-red2: #8b0a03; /* Deep Red — reserve */
+        --ca-gold: #fa9441; /* CA Gold — accent text/bars on navy (6.1:1) */
+        --g90: #171717;
+        --g70: #454545;
+        --g50: #757575;
+        --g30: #adadad;
+        --g10: #e6e6e6;
+        --g05: #f0f0f0;
+        --white: #ffffff;
+        --ink: #f5f5f5; /* near-white body text on dark */
+      }
+
+      .reveal {
+        font-family:
+          "Public Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
+        font-size: 30px;
+        color: var(--ink);
+        font-weight: 400;
+      }
+      .reveal .slides {
+        text-align: left;
+      }
+      .reveal .slides section {
+        padding-left: 40px;
+        padding-right: 40px;
+        box-sizing: border-box;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        color: var(--white);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        text-transform: none;
+        line-height: 1.1;
+        margin: 0 0 0.35em 0;
+      }
+      .reveal h1 {
+        font-size: 1.8em;
+      }
+      .reveal h2 {
+        font-size: 1.28em;
+      }
+      .reveal h3 {
+        font-size: 1em;
+        color: var(--white);
+      }
+      .reveal p {
+        line-height: 1.35;
+        margin: 0.35em 0;
+      }
+      .reveal ul,
+      .reveal ol {
+        margin: 0.2em 0 0.2em 1em;
+      }
+      .reveal li {
+        margin: 0.3em 0;
+        line-height: 1.3;
+      }
+      .reveal a {
+        color: var(--ca-lightblue);
+        text-decoration: underline;
+      }
+      .reveal strong {
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+      .reveal em {
+        color: var(--ca-lightblue);
+        font-style: italic;
+      }
+      .reveal code {
+        font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 0.85em;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--ca-lightblue);
+        padding: 0.06em 0.34em;
+        border-radius: 4px;
+      }
+      .reveal pre {
+        box-shadow: none;
+        width: 100%;
+        font-size: 0.62em;
+      }
+      .reveal pre code {
+        background: #0f1b2d;
+        color: var(--g05);
+        border-radius: 10px;
+        padding: 16px 20px;
+        max-height: none;
+      }
+      .reveal pre code .hljs-attr,
+      .reveal pre code .hljs-attribute {
+        color: var(--ca-code);
+      }
+      .reveal pre code .hljs-punctuation {
+        color: var(--g10);
+      }
+
+      /* accents — CA Gold (adapted for a dark background) */
+      .kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 0.62em;
+        font-weight: 800;
+        color: var(--ca-gold);
+        margin-bottom: 0.5em;
+        display: block;
+      }
+      .rule {
+        height: 6px;
+        width: 92px;
+        background: var(--ca-gold);
+        border: 0;
+        border-radius: 3px;
+        margin: 0.5em 0 0.7em;
+      }
+      .accent {
+        color: var(--ca-gold);
+      }
+      .arrow {
+        color: var(--ca-gold);
+      }
+      .muted {
+        color: var(--ca-lightblue);
+      }
+      .small {
+        font-size: 0.78em;
+      }
+      .big-number {
+        font-size: 2.6em;
+        font-weight: 800;
+        color: var(--ca-gold);
+        line-height: 1;
+        display: block;
+      }
+      .lead {
+        font-size: 1.15em;
+        color: var(--g05);
+      }
+
+      /* two-column layout */
+      .cols {
+        display: flex;
+        gap: 1.1em;
+        align-items: flex-start;
+      }
+      .col {
+        flex: 1;
+      }
+
+      /* cards — subtle raised panel on dark */
+      .card {
+        background: rgba(255, 255, 255, 0.07);
+        border-left: 6px solid var(--ca-gold);
+        border-radius: 8px;
+        padding: 0.55em 0.8em;
+        margin: 0.35em 0;
+      }
+      .card.blue {
+        border-left-color: var(--ca-lightblue);
+      }
+      .card.red {
+        border-left-color: var(--ca-red);
+      }
+      .card strong {
+        color: var(--white);
+      }
+
+      /* pills / chips */
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em;
+        margin: 0.4em 0;
+      }
+      .chip {
+        background: var(--ca-altblue);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.22em 0.8em;
+        font-size: 0.66em;
+        font-weight: 700;
+      }
+      .chip.red {
+        background: var(--ca-red);
+        color: #fff;
+      }
+      .chip.ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+      }
+
+      /* live-demo banner */
+      .demo-badge {
+        display: inline-block;
+        background: var(--ca-red);
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        font-size: 0.6em;
+        padding: 0.35em 0.85em;
+        border-radius: 6px;
+        text-transform: uppercase;
+      }
+
+      /* prompt list (demo questions) */
+      .prompts {
+        list-style: none;
+        margin: 0.4em 0 0;
+        padding: 0;
+      }
+      .prompts li {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 0.45em 0.75em;
+        margin: 0.32em 0;
+        font-size: 0.86em;
+      }
+      .prompts li::before {
+        content: "❯ ";
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+
+      /* screenshot placeholder */
+      .shot {
+        border: 2px dashed rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--ca-lightblue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.76em;
+        padding: 1.4em;
+        min-height: 2.4em;
+      }
+
+      /* product screenshot */
+      .screenshot-img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        display: block;
+      }
+
+      /* headshot photo */
+      .headshot {
+        width: 280px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center 18%;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* CivicActions logo badge */
+      .ca-logo {
+        height: 22px;
+        vertical-align: middle;
+        background: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+
+      /* wide illustrative graphics (e.g. the CSV-gap visual) */
+      .wide-visual {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: block;
+      }
+
+      /* DKAN + Drupal brand lockup */
+      .brand-lockup {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 0.9em;
+        opacity: 0.88;
+      }
+      .brand-lockup .dkan-logo {
+        height: 34px;
+        width: auto;
+        display: block;
+      }
+      .brand-lockup .brand-x {
+        color: var(--ca-lightblue);
+        font-weight: 800;
+        font-size: 0.9em;
+      }
+      .brand-lockup .drupal-logo {
+        height: 44px;
+        width: auto;
+        display: block;
+      }
+
+      /* small inline icon before a link */
+      .link-icon {
+        height: 0.85em;
+        width: auto;
+        vertical-align: -0.05em;
+        margin-right: 0.4em;
+        opacity: 0.85;
+      }
+
+      /* flow arrows */
+      .flow {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.35em;
+        font-size: 0.78em;
+        margin: 0.4em 0;
+      }
+      .flow .step {
+        background: var(--ca-altblue);
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.35em 0.65em;
+        font-weight: 700;
+      }
+      .flow .step.red {
+        background: var(--ca-red);
+        color: #fff;
+      }
+      .flow .arrow {
+        color: var(--ca-gold);
+        font-weight: 800;
+      }
+      /* One-row variant: never wrap the flow itself; wrap text inside the
+         step pills instead. */
+      .flow.oneline {
+        flex-wrap: nowrap;
+      }
+      .flow.oneline .step {
+        min-width: 0;
+        text-align: center;
+        line-height: 1.25;
+        padding: 0.3em 0.5em;
+      }
+      .flow.oneline .arrow {
+        flex: 0 0 auto;
+      }
+
+      /* footer */
+      .reveal .slide-footer {
+        display: none;
+      } /* superseded by a single global footer (below) */
+      .reveal .deck-footer {
+        position: absolute;
+        bottom: 13px;
+        left: 20px;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.04em;
+        z-index: 31;
+      }
+      .reveal .slide-number {
+        color: rgba(255, 255, 255, 0.55);
+        background: transparent;
+        font-size: 16px;
+      }
+      /* flip chrome dark on light (pop) slides — reveal toggles has-light-background */
+      .reveal.has-light-background .deck-footer {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .reveal.has-light-background .slide-number {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      table.mini {
+        font-size: 0.72em;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table.mini th {
+        text-align: left;
+        color: var(--ca-gold);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 0.25em 0.45em;
+      }
+      table.mini td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 0.24em 0.45em;
+      }
+
+      /* ===== POP slides: live demos on Light Invert (#F4F4F5) — flip to light theme ===== */
+      .reveal section.pop {
+        color: var(--g90);
+      }
+      .reveal section.pop h1,
+      .reveal section.pop h2,
+      .reveal section.pop h3 {
+        color: var(--ca-blue);
+      }
+      .reveal section.pop strong {
+        color: var(--ca-blue);
+      }
+      .reveal section.pop em {
+        color: var(--g70);
+      }
+      .reveal section.pop .muted,
+      .reveal section.pop .lead {
+        color: var(--g70);
+      }
+      .reveal section.pop a {
+        color: var(--ca-altblue);
+      }
+      .reveal section.pop code {
+        background: var(--g05);
+        color: var(--ca-blue2);
+      }
+      .reveal section.pop .kicker,
+      .reveal section.pop .accent,
+      .reveal section.pop .arrow,
+      .reveal section.pop .big-number,
+      .reveal section.pop table.mini th {
+        color: var(--ca-red-text);
+      }
+      .reveal section.pop .rule {
+        background: var(--ca-red);
+      }
+      .reveal section.pop .prompts li {
+        background: var(--g05);
+        border-color: var(--g10);
+        color: var(--g90);
+      }
+      .reveal section.pop .prompts li::before {
+        color: var(--ca-red);
+      }
+      .reveal section.pop table.mini td {
+        border-color: var(--g10);
+      }
+
+      /* Honor reduced-motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        .reveal .slides section,
+        .reveal.slide section {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- ============ 1. TITLE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Drupal AI Learners Club · August 2026</span>
+          <h1>Tools, Resources, Prompts</h1>
+          <hr class="rule" />
+          <p class="lead">
+            MCP from the ground up, then live on DKAN — with a hands-on tour in
+            MCP Dojo.
+          </p>
+          <p style="margin-top: 1.2em">
+            <strong>Dan Goodwin</strong> · Sr. Front End Developer ·
+            CivicActions
+          </p>
+          <p class="small muted">
+            <a href="https://www.drupal.org/project/dkan_mcp_server"
+              ><code>dkan_mcp_server</code></a
+            >
+            &nbsp;·&nbsp;
+            <a href="https://mcpdojo.dev">mcpdojo.dev</a>
+          </p>
+        </section>
+
+        <!-- ============ 2. WHO I AM ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Who I am</span>
+          <h2>Dan Goodwin</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p>
+                <strong>Sr. Front End Developer<br />—</strong>
+                <img
+                  class="ca-logo"
+                  src="img/civicactions-logo.svg"
+                  alt="CivicActions"
+                /><br /><span class="muted small">Apex, NC</span>
+              </p>
+              <ul>
+                <li>
+                  Drupal since D6; now focused on
+                  <strong>federal open data</strong>
+                </li>
+                <li>
+                  I write the <strong>DKAN AI modules</strong> — including the
+                  MCP server we'll tour today
+                </li>
+                <li>
+                  Built <strong>MCP Dojo</strong>, the teaching client we'll
+                  demo with
+                </li>
+              </ul>
+              <p class="small muted">Off the clock: guitar, Aikido.</p>
+            </div>
+            <div class="col">
+              <img
+                class="headshot"
+                src="img/dan-headshot.jpg"
+                alt="Dan Goodwin"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- ============ ACT 1 · MCP FUNDAMENTALS ============== -->
+        <!-- ==================================================== -->
+
+        <!-- ============ 3. WHY MCP EXISTS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · why it exists</span>
+          <h2>The N×M problem</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Every AI client × every data source used to be a
+            <strong>bespoke integration</strong>. MCP replaces that grid with
+            one protocol.
+          </p>
+          <ul style="margin-top: 0.6em">
+            <li>
+              <strong>MCP</strong> — Model Context Protocol. A standard way for
+              an AI application to discover and use another system's
+              capabilities.
+            </li>
+            <li>
+              One line: <em>"the USB-C port for AI tools."</em> Implement the
+              port once; any client plugs in.
+            </li>
+          </ul>
+          <p class="small muted" style="margin-top: 0.6em">
+            An open standard — born at Anthropic, now under the Linux
+            Foundation.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Frame the "twice" promise from the event blurb here: first the
+            protocol from the ground up, then the same concepts running in
+            production on DKAN. Nothing in the next ten slides is
+            DKAN-specific — that's the point. The mental model transfers to
+            whatever server they build. Governance detail if asked: released
+            by Anthropic Nov 2024; stewarded since 2026 under the Linux
+            Foundation's Agentic AI Foundation; tens of thousands of public
+            servers exist.
+          </aside>
+        </section>
+
+        <!-- ============ 4. HOST / CLIENT / SERVER ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · the shape of it</span>
+          <h2>Host, client, server</h2>
+          <hr class="rule" />
+          <div class="flow oneline" style="font-size: 0.85em; margin-top: 0.6em">
+            <span class="step">AI application<br /><em>the host</em></span>
+            <span class="arrow">⇄</span>
+            <span class="step">MCP client<br /><em>one per connection</em></span>
+            <span class="arrow">⇄</span>
+            <span class="step red">MCP server<br /><em>what you build</em></span>
+            <span class="arrow">⇄</span>
+            <span class="step">your system<br /><em>DKAN, an API, files…</em></span>
+          </div>
+          <ul style="margin-top: 0.8em">
+            <li>
+              The <strong>host</strong> is the AI app (Claude Code, an IDE, a
+              chat UI); it holds the model and runs the
+              <strong>agent loop</strong>:
+            </li>
+            <li class="small" style="list-style: none">
+              <span class="muted"
+                >your question + the tool list go to the model → the model asks
+                for a tool call → the host executes it → the result goes back
+                to the model → repeat until it can answer.</span
+              >
+            </li>
+            <li>
+              The <strong>server</strong> exposes capabilities. It has
+              <strong>no AI model in it</strong> — it just answers requests.
+            </li>
+            <li>
+              Under the hood: <strong>JSON-RPC 2.0</strong> messages. You
+              rarely write protocol code — SDKs (TypeScript, Python,
+              <strong>PHP</strong>…) handle it.
+            </li>
+          </ul>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 5. TRANSPORTS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · how they connect</span>
+          <h2>Two transports, same protocol</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.5em">
+            <div class="col card blue">
+              <h3>stdio</h3>
+              <p class="small">
+                The host launches the server as a <strong>local child
+                process</strong> and talks over stdin/stdout.
+              </p>
+              <p class="small muted">
+                e.g. Claude Code ↔ <code>drush dkan-mcp-server:serve</code>
+              </p>
+            </div>
+            <div class="col card">
+              <h3>Streamable HTTP</h3>
+              <p class="small">
+                The server is a <strong>remote endpoint</strong> —
+                <code>POST /mcp</code> — with real auth (OAuth bearer tokens).
+              </p>
+              <p class="small muted">e.g. a browser app ↔ a DKAN site</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.8em">
+            Same messages, same tools, same behavior — the transport is
+            <strong>plumbing, not semantics</strong>. Today's demo uses HTTP;
+            the module ships both.
+          </p>
+          <div class="chips" style="margin-top: 0.5em">
+            <span class="chip ghost">clients you may already have:</span>
+            <span class="chip">Claude Code</span>
+            <span class="chip">Claude Desktop</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">Cursor</span>
+            <span class="chip">MCP Dojo</span>
+          </div>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 6. LIFECYCLE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · the lifecycle</span>
+          <h2>Every connection starts the same way</h2>
+          <hr class="rule" />
+          <div class="flow oneline" style="font-size: 0.82em; margin-top: 0.6em">
+            <span class="step red">initialize<br /><em>handshake</em></span>
+            <span class="arrow">→</span>
+            <span class="step">tools/list<br />resources/list<br />prompts/list</span>
+            <span class="arrow">→</span>
+            <span class="step">calls<br /><em>the actual work</em></span>
+          </div>
+          <ul style="margin-top: 0.8em">
+            <li>
+              <code>initialize</code> negotiates versions and
+              <strong>capabilities</strong> <em>(which optional features each
+              side supports)</em>, and can return an
+              <code>instructions</code> string — the server briefing the model
+              on how to use it.
+            </li>
+            <li>
+              Then the client <strong>discovers</strong> everything: nothing is
+              hard-coded, the server describes itself.
+            </li>
+            <li class="accent">
+              <strong>You'll watch this exact handshake on the wire</strong> in
+              the demo.
+            </li>
+          </ul>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Discovery is the load-bearing idea for beginners: an MCP client
+            written last year works with a server written tomorrow because
+            capabilities are listed, not compiled in. The instructions string
+            matters later — DKAN's server uses it to teach the model the
+            find → inspect → query flow, and MCP Dojo shows it landing in the
+            system prompt.
+          </aside>
+        </section>
+
+        <!-- ============ 7. THREE PRIMITIVES (THESIS) ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · the core idea</span>
+          <h2>Three primitives — and who controls each</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
+            <div class="col card red">
+              <h3>Tools</h3>
+              <p><strong>Model-controlled.</strong></p>
+              <p class="small">
+                Actions the <em>AI decides</em> to call — search, query,
+                update.
+              </p>
+            </div>
+            <div class="col card blue">
+              <h3>Resources</h3>
+              <p><strong>App-controlled.</strong></p>
+              <p class="small">
+                Context the <em>application attaches</em> — documents, records,
+                schemas.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>Prompts</h3>
+              <p><strong>User-controlled.</strong></p>
+              <p class="small">
+                Workflows the <em>human invokes</em> — slash-command style.
+              </p>
+            </div>
+          </div>
+          <p class="accent" style="margin-top: 0.9em">
+            <strong
+              >If you remember one slide, make it this one — the whole demo is
+              built around making this distinction visible.</strong
+            >
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            The spec's own framing, and the single best disambiguator when
+            people ask "why not just tools for everything?" — because who
+            initiates matters: tools put the model in charge, resources put
+            the app in charge, prompts put the person in charge. MCP Dojo
+            color-codes the three and badges every timeline event with the
+            actor (user / model / app / server) precisely to teach this slide.
+          </aside>
+        </section>
+
+        <!-- ============ 8. TOOLS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Primitive 1 of 3 · model-controlled</span>
+          <h2>Tools</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col" style="flex: 1.1">
+              <pre><code class="language-json" data-trim>{
+  "name": "search_datasets",
+  "description": "Search datasets by keyword
+    via the DKAN search API, with pagination.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "keyword":  { "type": "string" },
+      "page":     { "type": "integer", "minimum": 1 },
+      "pageSize": { "type": "integer", "maximum": 50 }
+    },
+    "required": ["keyword"]
+  },
+  "annotations": { "readOnlyHint": true }
+}</code></pre>
+            </div>
+            <div class="col">
+              <ul class="small">
+                <li>
+                  A tool = <strong>name + description + JSON Schema</strong>
+                  for input (and optionally output)
+                </li>
+                <li>
+                  <strong>Annotations</strong> hint at behavior: read-only,
+                  destructive, idempotent, open-world
+                </li>
+              </ul>
+              <div class="card red small">
+                <strong>The description is written for the model, not for
+                humans.</strong> It's the only thing the model reads when
+                deciding <em>whether</em> and <em>how</em> to call your tool.
+                Write it like documentation for the model — because it is.
+              </div>
+            </div>
+          </div>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            This JSON is the real wire shape of a real tool from the DKAN
+            server — the same one we'll call in the demo. "Description is a
+            prompt" gets its payoff in the demo's description-sandbox
+            flourish: rewrite it to "DEPRECATED AND BROKEN" and the model
+            stops calling it. Annotations are hints for the host, not
+            enforcement. Dark side if asked: a malicious server can steer the
+            model the same way (tool poisoning / prompt injection) — only
+            connect to servers you trust; the host's permission prompts are
+            the real gate. The takeaways slide closes this loop.
+          </aside>
+        </section>
+
+        <!-- ============ 9. RESOURCES ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Primitive 2 of 3 · app-controlled</span>
+          <h2>Resources</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Data the <strong>application</strong> (the host app) puts in front
+            of the model — the model didn't ask.
+          </p>
+          <ul style="margin-top: 0.6em">
+            <li>
+              Each resource has a <strong>URI</strong> —
+              <code>dkan://dataset/cedcd327-…</code> — and a MIME type
+            </li>
+            <li>
+              <strong>Templates</strong> parameterize them:
+              <code>dkan://dataset/{id}</code>, with typeahead completion for
+              the variables
+            </li>
+            <li>
+              The app can <strong>read</strong> one (just look) or
+              <strong>attach</strong> it to the conversation's
+              <strong>context</strong> — everything the model gets to see when
+              it answers
+            </li>
+          </ul>
+          <p style="margin-top: 0.7em">
+            Think: "open this record in the conversation" — the way an IDE
+            attaches a file, a catalog attaches a dataset.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            The hardest primitive for newcomers because nothing happens
+            without an app that uses them — which is exactly why the demo
+            matters: preview vs. attach, then open the context inspector and
+            show the attached dataset sitting in the system prompt. Tools =
+            the model pulls; resources = the app pushes.
+          </aside>
+        </section>
+
+        <!-- ============ 10. PROMPTS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Primitive 3 of 3 · user-controlled</span>
+          <h2>Prompts</h2>
+          <hr class="rule" />
+          <p class="lead">
+            Reusable, parameterized workflows the <strong>human</strong>
+            invokes — the server's slash commands.
+          </p>
+          <ul style="margin-top: 0.6em">
+            <li>
+              Server-authored: the people who know the data encode
+              <strong>how to work with it</strong> —
+              <code>/explore_dataset</code>, <code>/dataset_health_check</code>
+            </li>
+            <li>
+              Arguments with completion — the client renders them as a form or
+              inline typeahead
+            </li>
+            <li>
+              The server <strong>expands</strong> the slash command into full
+              message text — shown to the user <em>before</em> it sends, so
+              nothing reaches the model unseen
+            </li>
+          </ul>
+          <p style="margin-top: 0.7em">
+            A prompt is <strong>expertise, shipped with the server</strong> —
+            the difference between handing someone a toolbox and handing them a
+            checklist.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            DKAN ships five: find_datasets, explore_dataset,
+            build_datastore_query, dataset_health_check, diagnose_harvest.
+            The demo's two-Enter flow (first Enter previews the expansion,
+            second sends) is the teaching moment — nothing reaches the model
+            without the user seeing it first.
+          </aside>
+        </section>
+
+        <!-- ============ 11. ERROR CHANNELS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · when things fail</span>
+          <h2>Three error channels</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
+            <div class="col card">
+              <span class="big-number" style="font-size: 1.3em">1</span>
+              <h3>In the tool result</h3>
+              <p class="small">
+                "That column doesn't exist." <strong>The model sees it</strong>
+                — and can self-correct on the next turn.
+              </p>
+            </div>
+            <div class="col card blue">
+              <span class="big-number" style="font-size: 1.3em">2</span>
+              <h3>JSON-RPC error</h3>
+              <p class="small">
+                Protocol-level: permission denied, unknown method.
+                <strong>The app sees it</strong> — the model may never know.
+              </p>
+            </div>
+            <div class="col card red">
+              <span class="big-number" style="font-size: 1.3em">3</span>
+              <h3>Transport failure</h3>
+              <p class="small">
+                The connection itself dies — server down, process killed.
+                <strong>Your monitoring sees it</strong> — nobody in the
+                conversation does.
+              </p>
+            </div>
+          </div>
+          <p style="margin-top: 0.8em">
+            Knowing <strong>which channel</strong> an error travels on tells you
+            <strong>who can react</strong> to it. You'll see channels 1 and 2
+            live.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Channel 1 in the demo: query_datastore with a bogus resource id —
+            protocol succeeds, amber "error inside the result" chip, the model
+            can read it and retry. Channel 2: the forced update_dataset as
+            read-only — HTTP 403 / JSON-RPC -32002; the app handles it.
+            Channel 3: what a dead DKAN site looks like — mention, don't demo.
+            This distinction is also a design lever: DKAN deliberately returns
+            rich channel-1 errors so agents self-correct in one turn.
+          </aside>
+        </section>
+
+        <!-- ============ 12. CHECKPOINT ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">MCP fundamentals · checkpoint</span>
+          <h2>The whole mental model, one table</h2>
+          <hr class="rule" />
+          <table class="mini" style="font-size: 0.8em; margin-top: 0.4em">
+            <tr>
+              <th>Primitive</th>
+              <th>Who controls it</th>
+              <th>Discovered via</th>
+              <th>In the demo</th>
+            </tr>
+            <tr>
+              <td><strong>Tools</strong></td>
+              <td>the model</td>
+              <td><code>tools/list</code></td>
+              <td>agent picks &amp; calls <code>search_datasets</code></td>
+            </tr>
+            <tr>
+              <td><strong>Resources</strong></td>
+              <td>the app</td>
+              <td><code>resources/list</code> + templates</td>
+              <td>attach <code>dkan://dataset/{id}</code> to context</td>
+            </tr>
+            <tr>
+              <td><strong>Prompts</strong></td>
+              <td>the user</td>
+              <td><code>prompts/list</code></td>
+              <td><code>/explore_dataset</code> slash command</td>
+            </tr>
+          </table>
+          <p style="margin-top: 0.9em">
+            Plus a <strong>lifecycle</strong> (initialize → discover → call),
+            <strong>two transports</strong>, and
+            <strong>three error channels</strong>. That's the server side of
+            the protocol.
+          </p>
+          <p class="small muted">
+            (MCP also defines three <em>client-side</em> primitives — sampling,
+            roots, elicitation — rarer in the wild; ask me in Q&amp;A.)
+          </p>
+          <p class="accent">
+            <strong>Now let's ground every one of these in a real server.</strong>
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Client-side primitives, if asked: sampling — the server asks the
+            client's model to generate something (the server borrows the
+            host's LLM instead of shipping its own); roots — the client tells
+            the server which locations are in scope (e.g. which project
+            directories); elicitation — the server asks the human for
+            structured input mid-operation. All three invert the direction:
+            the server initiates, the client serves. Few clients implement
+            them fully, which is why the talk stays on the server three.
+          </aside>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- ============ ACT 2 · APPLIED: DKAN ================= -->
+        <!-- ==================================================== -->
+
+        <!-- ============ 13. OPEN DATA FIT ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · the use case</span>
+          <h2>Why open data is a natural fit</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p>
+                Governments publish data <strong>open by default</strong> —
+                it's the law (OPEN Government Data Act, 2019). The
+                infrastructure got good: APIs, catalogs, standard metadata
+                (DCAT).
+              </p>
+              <p style="margin-top: 0.6em">
+                But <strong>"published" ≠ "answered"</strong> — the answer is
+                in a 12-million-row CSV somewhere, behind a query language most
+                people will never learn.
+              </p>
+            </div>
+            <div class="col">
+              <img
+                class="wide-visual"
+                src="img/csv-gap.jpg"
+                alt="Illustration of an endless grid of spreadsheet data extending toward the horizon, with a single cell glowing orange among millions of muted ones."
+              />
+            </div>
+          </div>
+          <p class="accent" style="margin-top: 0.6em">
+            <strong
+              >Structured data + real APIs + machine-readable metadata: exactly
+              the shape MCP serves well.</strong
+            >
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            The compressed version of the DrupalCamp talk's opening arc. If
+            questions pull this way: FAIR principles (findable, accessible,
+            interoperable, reusable) were written for machines as much as
+            people — open data spent a decade making itself
+            machine-actionable, and MCP is the machine finally showing up.
+          </aside>
+        </section>
+
+        <!-- ============ 14. WHAT DKAN IS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · the platform</span>
+          <h2>What DKAN is</h2>
+          <hr class="rule" />
+          <ul>
+            <li>
+              The <strong>Drupal distribution for open-data catalogs</strong>,
+              in active use since 2013. Inspired by CKAN, built on Drupal.
+            </li>
+            <li>
+              Maintained by <strong>CivicActions</strong>; many public agencies
+              run their data portals on it.
+            </li>
+            <li>
+              <strong>DKAN 4</strong> shipped on Drupal.org in March 2026 —
+              <code>composer require drupal/dkan</code>, like any module.
+            </li>
+          </ul>
+          <div class="card">
+            <strong>Even if you'll never run DKAN:</strong> it's a clean,
+            real-world example of structured public data with an API — a
+            perfect subject for learning what an MCP server looks like in
+            production.
+          </div>
+          <div class="brand-lockup">
+            <img class="dkan-logo" src="img/dkan-logo-white.svg" alt="DKAN" />
+            <span class="brand-x">×</span>
+            <img
+              class="drupal-logo"
+              src="img/drupal-logo-white.svg"
+              alt="Drupal"
+            />
+          </div>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 15. METASTORE + DATASTORE ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · the platform</span>
+          <h2>Two halves: Metastore &amp; Datastore</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card blue">
+              <h3>Metastore</h3>
+              <p>
+                The records <strong>describing</strong> the data. CRUD over
+                metadata (DCAT, the standard open-data metadata format): titles,
+                descriptions, distributions, schemas.
+              </p>
+              <p class="small muted">→ tells you <em>what exists</em>.</p>
+            </div>
+            <div class="col card">
+              <h3>Datastore</h3>
+              <p>
+                The <strong>rows themselves</strong>, made queryable via the
+                DatastoreQuery endpoint.
+              </p>
+              <p class="small muted">→ lets you <em>compute on it</em>.</p>
+            </div>
+          </div>
+          <p style="margin-top: 0.7em">
+            The MCP tools <strong>discover</strong> through the metastore and
+            <strong>answer</strong> through the datastore.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 16. DKAN AS AN MCP SERVER ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · dkan_mcp_server</span>
+          <h2>DKAN as an MCP server — all three primitives</h2>
+          <hr class="rule" />
+          <div class="cols" style="margin-top: 0.4em; align-items: stretch">
+            <div class="col card red">
+              <h3><span class="big-number" style="font-size: 1.3em">38</span> tools</h3>
+              <p class="small">
+                <span class="chip">25 read</span>
+                <span class="chip red">13 write</span>
+              </p>
+              <p class="small">
+                metastore 9 · datastore 8 · harvest 7 · write 10 ·
+                status/search 4
+              </p>
+              <p class="small muted">
+                13 = 10 write + 3 harvest tools that also write
+              </p>
+            </div>
+            <div class="col card blue">
+              <h3>4 resource templates</h3>
+              <p class="small">
+                The catalog mirrored under <code>dkan://</code> URIs — dataset,
+                distribution, data dictionary, datastore schema — with
+                typeahead completion on <code>{id}</code>.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>5 prompts</h3>
+              <p class="small">
+                <code>find_datasets</code> · <code>explore_dataset</code> ·
+                <code>build_datastore_query</code> ·
+                <code>dataset_health_check</code> ·
+                <code>diagnose_harvest</code>
+              </p>
+            </div>
+          </div>
+          <p style="margin-top: 0.8em">
+            The three cards from the fundamentals section,
+            <strong>instantiated</strong> — same colors, same control split.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Bookkeeping if asked: 25 + 13 vs. the group counts — three of the
+            harvest tools (register/run/deregister) are also writes. The card
+            colors deliberately match slide 7 (tools red = model, resources
+            blue = app, prompts gold = user).
+          </aside>
+        </section>
+
+        <!-- ============ 17. BUILT ON MCP_SERVER ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · under the hood</span>
+          <h2>Built on contrib <code style="font-size: 0.9em">mcp_server</code></h2>
+          <hr class="rule" />
+          <div class="flow oneline" style="font-size: 0.8em; margin-top: 0.5em">
+            <span class="step">MCP PHP SDK<br /><em>the protocol</em></span>
+            <span class="arrow">→</span>
+            <span class="step">drupal/mcp_server<br /><em>transports · plugin API</em></span>
+            <span class="arrow">→</span>
+            <span class="step red">dkan_mcp_server<br /><em>DKAN tools + access gate</em></span>
+          </div>
+          <ul style="margin-top: 0.8em">
+            <li>
+              Protocol, transports, JSON-RPC — <strong>all upstream</strong>.
+              This module adds only the DKAN tools and the access gate.
+            </li>
+            <li>
+              The same recipe works for <strong>your</strong> Drupal site:
+              install <code>mcp_server</code>, write tool plugins for your
+              domain.
+            </li>
+          </ul>
+          <p style="margin-top: 0.6em">
+            A <strong>domain layer</strong> on community foundations — no
+            bespoke protocol code anywhere in the module.
+          </p>
+          <p class="small muted">
+            The other direction exists too: the contrib <code>mcp</code> module
+            makes Drupal an MCP <em>client</em> — your site's AI agents calling
+            external servers.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 18. TOOL PLUGIN (CODE) ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · the one code slide</span>
+          <h2>One tool = one attribute plugin</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col" style="flex: 1.25">
+              <pre><code class="language-php" data-trim>#[Tool(
+  id: 'search_datasets',
+  description: new TranslatableMarkup(
+    'Search datasets by keyword via the
+     DKAN search API, with pagination.'),
+  inputSchema: [ /* JSON Schema */ ],
+  readOnly: TRUE, destructive: FALSE,
+)]
+final class SearchDatasetsTool extends SearchToolBase {
+
+  public function execute(array $arguments,
+    ClientGateway $gateway): mixed {
+    return $this->search->searchDatasets(
+      (string) ($arguments['keyword'] ?? ''),
+      (int) ($arguments['page'] ?? 1),
+      (int) ($arguments['pageSize'] ?? 10),
+    );
+  }
+
+}</code></pre>
+            </div>
+            <div class="col">
+              <ul class="small">
+                <li>
+                  The <code>#[Tool]</code> attribute <strong>is</strong> the
+                  wire definition from the JSON slide — same name, description,
+                  schema, annotations
+                </li>
+                <li>
+                  <code>execute()</code> is <strong>thin</strong>: it forwards
+                  to a plain Drupal service (<code>dkan_query_tools</code>) —
+                  <code>$gateway</code> is the caller's channel, unused here
+                </li>
+                <li>
+                  Base classes supply DI + defaults; logic stays testable
+                  outside the protocol
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Lightly abridged from the real SearchDatasetsTool.php — the full
+            version adds an outputSchema and label. Pattern to name: thin
+            adapters over framework-neutral services, so the same logic also
+            powers DKAN's chat-widget module. "Write the description like a
+            prompt" — it's the exact string the model reads.
+          </aside>
+        </section>
+
+        <!-- ============ 19. PERMISSIONS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · access control</span>
+          <h2>Same server, two connections</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col card">
+              <h3>Read-only persona</h3>
+              <p><code>tools/list</code> → <strong>25 tools</strong></p>
+              <p class="small muted">the 13 writes are invisible</p>
+            </div>
+            <div class="col card">
+              <h3>Editor persona</h3>
+              <p><code>tools/list</code> → <strong>all 38</strong></p>
+              <p class="small muted">and <code>update_dataset</code> works</p>
+            </div>
+          </div>
+          <ul style="margin-top: 0.7em">
+            <li>
+              Per-tool <strong>Drupal permissions</strong>; inaccessible tools
+              are hidden from <code>tools/list</code> <em>and</em> rejected on
+              <code>tools/call</code> (HTTP 403 / JSON-RPC
+              <code>-32002</code>)
+            </li>
+            <li>
+              Enforced <strong>below the transport</strong> — stdio and HTTP
+              behave identically
+            </li>
+          </ul>
+          <p class="small muted">
+            A "persona" is just a credential set — here, two OAuth consumers
+            mapped to different Drupal roles.
+          </p>
+          <p class="accent">
+            <strong>You'll watch this diff live in about five minutes.</strong>
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            The gate is ToolAccessSubscriber. Two independent layers if asked:
+            authorization (per-tool permissions) and operational gating (tool
+            groups — switch whole subsystems off in settings). Over HTTP the
+            personas are two simple_oauth client_credentials consumers, which
+            is exactly what MCP Dojo's Read-only/Editor pills are.
+          </aside>
+        </section>
+
+        <!-- ============ 20. AGENT-FRIENDLY DESIGN ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Applied · design for agents</span>
+          <h2>Designed for a caller that pays per token</h2>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <ul class="small">
+                <li>
+                  <strong>Row caps</strong> everywhere: ≤500 datastore, ≤100
+                  metastore, ≤50 search
+                </li>
+                <li>
+                  <strong>Truncated</strong> descriptions; heavy fields
+                  dropped; the expensive catalog read cached
+                </li>
+                <li>
+                  <strong>Sanity flags</strong> (<code>row_cap_hit</code>,
+                  <code>zero_rows</code>) mark partial answers honestly
+                </li>
+              </ul>
+            </div>
+            <div class="col card">
+              <strong>Errors come back structured.</strong>
+              <p class="small">
+                An <code>unknown_column</code> error carries
+                <code>available_columns</code> — the agent fixes itself in
+                <em>one</em> turn. That's error channel 1, used deliberately as
+                a design tool.
+              </p>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.5em">
+            The whole design assumes tokens cost money — a good MCP server is a
+            good API <em>for a model</em>, not just for a developer.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- ============ ACT 3 · MCP DOJO DEMO ================= -->
+        <!-- ==================================================== -->
+
+        <!-- ============ 21. MEET MCP DOJO ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The demo · the client</span>
+          <h2>Meet MCP Dojo</h2>
+          <hr class="rule" />
+          <p class="lead">
+            A practice space for MCP: connect to <strong>any server</strong>,
+            explore its tools, resources, and prompts hands-on — with
+            <strong>every exchange logged and replayable</strong>.
+          </p>
+          <ul style="margin-top: 0.6em">
+            <li>
+              Built to teach the who-controls-what distinction: the three
+              primitives are
+              <strong>color-coded</strong>, every event badged by actor —
+              user, model, app, or server
+            </li>
+            <li>
+              A <strong>context inspector</strong> shows the exact payload the
+              next model call will send — and lets you edit it
+            </li>
+            <li>
+              A raw <strong>JSON-RPC drawer</strong> shows the wire itself
+            </li>
+          </ul>
+          <p class="small muted" style="margin-top: 0.6em">
+            <a href="https://mcpdojo.dev">mcpdojo.dev</a> ·
+            <a href="https://github.com/dcgoodwin2112/mcp-dojo"
+              >github.com/dcgoodwin2112/mcp-dojo</a
+            >
+            — the hosted replay needs zero setup.
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            One line of stack if asked: Next.js + the official MCP TypeScript
+            SDK; the agent loop runs client-side so every hop lands in the
+            log; secrets stay server-side. Today it connects to the DKAN
+            server over streamable HTTP with OAuth — the two personas are the
+            two consumers from the permissions slide.
+          </aside>
+        </section>
+
+        <!-- ============ 22. DEMO MAP ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The demo · the map</span>
+          <h2>The demo map — every concept from Act&nbsp;1</h2>
+          <hr class="rule" />
+          <table class="mini" style="font-size: 0.74em; margin-top: 0.3em">
+            <tr>
+              <th>#</th>
+              <th>Step</th>
+              <th>The concept it proves</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Connect</td>
+              <td>the <code>initialize</code> handshake + discovery</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Manual tool call</td>
+              <td>schemas &amp; structured results — <em>no model involved</em></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Ask the agent</td>
+              <td>tools are <strong>model-controlled</strong></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>/explore_dataset</code></td>
+              <td>prompts are <strong>user-controlled</strong></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Attach <code>dkan://dataset/{id}</code></td>
+              <td>resources are <strong>app-controlled</strong></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Switch persona</td>
+              <td>the permission gate: 25 tools → 38</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Force a write as read-only</td>
+              <td>error channel 2 — 403 / <code>-32002</code></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Open the raw drawer</td>
+              <td>the JSON-RPC wire itself</td>
+            </tr>
+          </table>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            This slide doubles as the fallback narration: if the live demo
+            dies, the golden recording in the Replay tab has a narration card
+            per step — seek and keep talking. Leave the slide up for a beat so
+            people can screenshot the map.
+          </aside>
+        </section>
+
+        <!-- ============ 23. LIVE DEMO ============ -->
+        <section class="pop" data-background-color="#F4F4F5">
+          <span class="demo-badge">● Live demo</span>
+          <h2 style="margin-top: 0.4em">MCP Dojo × dkan_mcp_server</h2>
+          <hr class="rule" />
+          <p class="small muted">
+            Streamable HTTP + OAuth · two personas (Read-only / Editor) · every
+            exchange on the timeline
+          </p>
+          <ul class="prompts">
+            <li>Connect — watch the handshake and discovery land</li>
+            <li>Call search_datasets by hand, then let the agent choose it</li>
+            <li>/explore_dataset — see the expansion before it sends</li>
+            <li>Attach a dataset resource; inspect the context</li>
+            <li>Switch personas: 25 tools → 38 — then force a 403</li>
+            <li>Open the raw JSON-RPC drawer: the whole talk, on the wire</li>
+          </ul>
+          <aside class="notes">
+            Runbook (full version: mcp-inspector/DEMO-RUNBOOK.md). PRE-FLIGHT
+            30+ min before: ddev start; npm run dev -- --port 3111; Live →
+            Read-only → Connect (25 tools, no errors); pre-warm get_catalog;
+            one agent question to gauge model latency; golden loads (133
+            events); Raw JSON-RPC OFF; notifications off; check `p`
+            presentation scale. BEATS: (1) Connect — token REDACTED,
+            initialize, three color-coded lists. (2) search_datasets, keyword
+            "bike lanes" — manual badge, structuredContent/outputSchema tabs.
+            (3) Chat "Summarize the Florida Bike Lanes dataset." — model
+            chooses the tool, result re-enters the loop. (4) /expl Tab → ce
+            Tab → Enter previews → Enter sends. (5) dkan://dataset/{id} —
+            Preview, then Attach; open ⊞ Context to show it in the system
+            prompt. Useful id: cedcd327-4e5d-43f9-8eb1-c11850fa7c55 (type
+            "ce" + Tab — that's the completion demo). (6) Editor pill — diff
+            25 → 38. (7) Back to Read-only; ask the model to change a title
+            (it has no tool); then force update_dataset by name with
+            {"identifier":"x","metadata":"{}"} → HTTP 403 / -32002. (8)
+            Toggle { } Raw JSON-RPC — handshake, paired frames, the 403.
+            FLOURISH (time permitting): description sandbox — rewrite
+            search_datasets to "DEPRECATED AND BROKEN — never use this tool…",
+            ask "Find datasets about bikes" → model calls list_datasets;
+            restore, clear conversation, ask again → search_datasets. Your
+            description is a prompt. RECOVERY: any step misbehaves → Replay
+            tab → golden → seek to that step's narration card; model slow →
+            "pause before each model call" makes silence intentional; session
+            wedged → New session (~2 s); site down → replay-only, the golden
+            covers every step. Keys: p present · Esc exit · space play/pause ·
+            ←/→ step · / prompts · Tab complete.
+          </aside>
+        </section>
+
+        <!-- ============ 24. WHAT YOU JUST SAW ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">The demo · debrief</span>
+          <h2>What you just saw</h2>
+          <hr class="rule" />
+          <table class="mini" style="font-size: 0.8em; margin-top: 0.4em">
+            <tr>
+              <th>Concept</th>
+              <th>Where it showed up</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>Lifecycle — initialize → discover → call</td>
+              <td>the connect step</td>
+              <td class="accent">✓</td>
+            </tr>
+            <tr>
+              <td>Tools · model-controlled</td>
+              <td>the agent chose <code>search_datasets</code> itself</td>
+              <td class="accent">✓</td>
+            </tr>
+            <tr>
+              <td>Prompts · user-controlled</td>
+              <td><code>/explore_dataset</code>, previewed before sending</td>
+              <td class="accent">✓</td>
+            </tr>
+            <tr>
+              <td>Resources · app-controlled</td>
+              <td>the dataset attached into the model's context</td>
+              <td class="accent">✓</td>
+            </tr>
+            <tr>
+              <td>Permissions below the transport</td>
+              <td>25 → 38 tools; the forced 403</td>
+              <td class="accent">✓</td>
+            </tr>
+            <tr>
+              <td>The wire — JSON-RPC</td>
+              <td>the raw drawer</td>
+              <td class="accent">✓</td>
+            </tr>
+          </table>
+          <p class="accent" style="margin-top: 0.8em">
+            <strong
+              >That's the whole protocol — handshake, three primitives,
+              permissions, errors, wire.</strong
+            >
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- ============ ACT 4 · CLOSE ========================= -->
+        <!-- ==================================================== -->
+
+        <!-- ============ 25. TAKEAWAYS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Close</span>
+          <h2>Three things to take home</h2>
+          <hr class="rule" />
+          <ol style="font-size: 1.02em; margin-top: 0.4em">
+            <li>
+              MCP is <strong>three primitives and a lifecycle</strong> — small
+              enough to learn in an afternoon, and now you have.
+            </li>
+            <li>
+              <strong>Who controls what</strong> is the load-bearing idea:
+              tools = model, resources = app, prompts = user.
+            </li>
+            <li>
+              <strong>Descriptions are prompts</strong> — write yours like
+              documentation for the model, and treat other people's as an
+              attack surface: only connect to servers you trust.
+            </li>
+          </ol>
+          <div class="card" style="margin-top: 0.6em">
+            <strong>Try it yourself:</strong>
+            <span class="small">
+              <a href="https://modelcontextprotocol.io"
+                >modelcontextprotocol.io</a
+              >
+              for the spec ·
+              <a href="https://www.drupal.org/project/mcp_server"
+                ><code>mcp_server</code></a
+              >
+              to make <em>your</em> Drupal site a server ·
+              <a href="https://mcpdojo.dev">mcpdojo.dev</a> to replay today's
+              demo, zero setup.
+            </span>
+          </div>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+        </section>
+
+        <!-- ============ 26. WHERE THIS IS HEADING ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Close · if we have time</span>
+          <h2>Where this is heading</h2>
+          <hr class="rule" />
+          <ul>
+            <li>
+              The spec keeps moving — the <strong>2026-07-28 revision</strong>
+              reworks sessions and adds <strong>Tasks</strong> for long-running
+              operations (think DKAN's <code>run_harvest</code>)
+            </li>
+            <li>
+              The <strong>Drupal AI Initiative</strong> calls this whole
+              direction <em>Outside AI</em> — agents using Drupal from outside;
+              <code>dkan_mcp_server</code> is a working example today
+            </li>
+            <li>
+              MCP Dojo's roadmap: side-by-side protocol versions, a guided
+              lesson mode, challenge exercises verified against the event log
+            </li>
+          </ul>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            The designated cut if running long — the takeaways slide closes
+            fine on its own.
+          </aside>
+        </section>
+
+        <!-- ============ 27. THANK YOU / Q&A ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Thank you</span>
+          <h1>Questions?</h1>
+          <hr class="rule" />
+          <div class="cols">
+            <div class="col">
+              <p class="small">
+                <strong>Today's stack</strong><br />
+                <a href="https://www.drupal.org/project/dkan_mcp_server"
+                  ><code>dkan_mcp_server</code></a
+                ><br />
+                <a href="https://www.drupal.org/project/mcp_server"
+                  ><code>mcp_server</code></a
+                >
+                ·
+                <a href="https://mcpdojo.dev">mcpdojo.dev</a>
+              </p>
+              <p class="small">
+                <strong>DKAN</strong> ·
+                <a href="https://www.drupal.org/project/dkan"
+                  >drupal.org/project/dkan</a
+                >
+                ·
+                <a href="https://getdkan.org">getdkan.org</a><br />
+                <strong>MCP</strong> ·
+                <a href="https://modelcontextprotocol.io"
+                  >modelcontextprotocol.io</a
+                >
+              </p>
+            </div>
+            <div class="col">
+              <p class="small">
+                <strong>Dan Goodwin</strong> · CivicActions<br />
+                <img class="link-icon" src="img/github-logo-white.svg" alt="" />
+                <a href="https://github.com/dcgoodwin2112"
+                  >github.com/dcgoodwin2112</a
+                ><br />
+                <img class="link-icon" src="img/drupal-logo-white.svg" alt="" />
+                <a href="https://www.drupal.org/u/dcgoodwin"
+                  >drupal.org/u/dcgoodwin</a
+                ><br />
+                <img
+                  class="link-icon"
+                  src="img/linkedin-logo-white.svg"
+                  alt=""
+                />
+                <a href="https://www.linkedin.com/in/dcgoodwin2112"
+                  >linkedin.com/in/dcgoodwin2112</a
+                ><br />
+                <img
+                  class="link-icon"
+                  src="img/website-icon-white.svg"
+                  alt=""
+                />
+                <a href="https://whobroketheinternet.com"
+                  >whobroketheinternet.com</a
+                >
+              </p>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.8em">
+            The replay of today's demo is at
+            <a href="https://mcpdojo.dev">mcpdojo.dev</a> — step through it as
+            slowly as you like.
+          </p>
+        </section>
+      </div>
+      <!-- .slides -->
+      <div class="deck-footer">
+        Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+      </div>
+    </div>
+    <!-- .reveal -->
+
+    <script>
+      // Headless Chrome throttles requestAnimationFrame, which stalls
+      // reveal's print-view activation; fall back to timers for PDF export.
+      if (/print-pdf/gi.test(window.location.search)) {
+        window.requestAnimationFrame = (cb) => setTimeout(cb, 16);
+      }
+    </script>
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.055,
+        minScale: 0.2,
+        maxScale: 2.0,
+        hash: true,
+        slideNumber: "c/t",
+        controlsLayout: "edges",
+        transition: "fade",
+        transitionSpeed: "fast",
+        plugins: [RevealNotes, RevealHighlight],
+      });
+    </script>
+  </body>
+</html>

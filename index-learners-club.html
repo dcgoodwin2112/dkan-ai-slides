@@ -635,6 +635,11 @@
               <strong>no AI model in it</strong> — it just answers requests.
             </li>
             <li>
+              Hosts usually run <strong>several servers at once</strong> — one
+              client per connection; the model sees all their tools merged into
+              one list.
+            </li>
+            <li>
               Under the hood: <strong>JSON-RPC 2.0</strong> messages. You
               rarely write protocol code — SDKs (TypeScript, Python,
               <strong>PHP</strong>…) handle it.
@@ -683,6 +688,12 @@
             <span class="chip">Cursor</span>
             <span class="chip">MCP Dojo</span>
           </div>
+          <p class="small muted" style="margin: 0.5em 0 0.1em">
+            Wiring a server into a client is a few lines of config —
+            <code>.mcp.json</code> in Claude Code:
+          </p>
+          <pre style="font-size: 0.5em"><code class="language-json" data-trim>{ "mcpServers": { "dkan": {
+    "command": "ddev", "args": ["drush", "dkan-mcp-server:serve"] } } }</code></pre>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
@@ -811,6 +822,11 @@
                 <li>
                   <strong>Annotations</strong> hint at behavior: read-only,
                   destructive, idempotent, open-world
+                </li>
+                <li>
+                  They feed the host's <strong>"Allow this tool call?"</strong>
+                  prompt — the human-in-the-loop gate you've seen in Claude
+                  Code
                 </li>
               </ul>
               <div class="card red small">
@@ -1382,8 +1398,10 @@ final class SearchDatasetsTool extends SearchToolBase {
             </div>
           </div>
           <p class="small muted" style="margin-top: 0.5em">
-            The whole design assumes tokens cost money — a good MCP server is a
-            good API <em>for a model</em>, not just for a developer.
+            The whole design assumes tokens cost money — and the
+            <strong>client pays too</strong>: every connected tool's schema
+            rides along on every model call, which is why hosts offer tool
+            toggles. Watch the context-growth meter in the demo.
           </p>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026

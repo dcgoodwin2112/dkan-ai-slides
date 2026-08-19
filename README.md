@@ -1,23 +1,26 @@
-# DKAN+AI: From Catalog to Conversation
+# DKAN + AI slide decks
 
-Slides for DrupalCamp Asheville 2026. Plain [reveal.js](https://revealjs.com) — no build step.
+Two [reveal.js](https://revealjs.com) decks sharing one setup — no build step.
 
-**Live deck:** https://dcgoodwin2112.github.io/dkan-ai-slides/
+| Deck | Event | Live |
+|---|---|---|
+| `index.html` — **DKAN+AI: From Catalog to Conversation** | DrupalCamp Asheville 2026 | https://dcgoodwin2112.github.io/dkan-ai-slides/ |
+| `index-learners-club.html` — **Tools, Resources, Prompts** | Drupal AI Learners Club, Aug 2026 | https://dcgoodwin2112.github.io/dkan-ai-slides/index-learners-club.html |
 
 ## Present
 
-Open `index.html` in a browser (or serve the directory). Keys: `S` speaker view, `F` fullscreen, `Esc` overview.
+Open the deck's HTML file in a browser (or serve the directory). Keys: `S` speaker view, `F` fullscreen, `Esc` overview.
 
 ## Export PDF
 
 ```bash
-./export-pdf.sh   # → slides.pdf (needs Chrome + python3)
+./export-pdf.sh   # → slides.pdf (index.html only; needs Chrome + python3)
 ```
 
 ## Publish
 
-GitHub Pages serves `main` at the URL above — push to publish.
+GitHub Pages serves `main` at the URLs above — push to publish.
 
 ## Live demos
 
-The two demo slides run against a local DKAN site (DDEV) with the bear-sightings sample dataset and the [`dkan_ai_query`](https://www.drupal.org/project/dkan_ai_query) / [`dkan_mcp_server`](https://www.drupal.org/project/dkan_mcp_server) modules installed.
+Both decks demo against a local DKAN site (DDEV) with the sample datasets and the [`dkan_ai_query`](https://www.drupal.org/project/dkan_ai_query) / [`dkan_mcp_server`](https://www.drupal.org/project/dkan_mcp_server) modules installed. The Learners Club deck's demo runs through [MCP Dojo](https://mcpdojo.dev) ([repo](https://github.com/dcgoodwin2112/mcp-dojo)); its speaker notes carry the demo runbook.

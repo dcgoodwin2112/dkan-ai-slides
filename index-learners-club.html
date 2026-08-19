@@ -126,6 +126,13 @@
       .reveal pre code .hljs-punctuation {
         color: var(--g10);
       }
+      /* monokai's comment/meta gray fails AA on the code background */
+      .reveal pre code .hljs-meta {
+        color: var(--ca-code);
+      }
+      .reveal pre code .hljs-comment {
+        color: var(--g30);
+      }
 
       /* accents — CA Gold (adapted for a dark background) */
       .kicker {
@@ -362,6 +369,10 @@
       }
       .flow .step.red {
         background: var(--ca-red);
+        color: #fff;
+      }
+      /* the lightblue em fails AA on the red pill background */
+      .flow .step em {
         color: #fff;
       }
       .flow .arrow {

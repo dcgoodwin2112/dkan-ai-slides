@@ -23,4 +23,4 @@ GitHub Pages serves `main` at the URLs above — push to publish.
 
 ## Live demos
 
-Both decks demo against a local DKAN site (DDEV) with the sample datasets and the [`dkan_ai_query`](https://www.drupal.org/project/dkan_ai_query) / [`dkan_mcp_server`](https://www.drupal.org/project/dkan_mcp_server) modules installed. The Learners Club deck's demo runs through [MCP Dojo](https://mcpdojo.dev) ([repo](https://github.com/dcgoodwin2112/mcp-dojo)); its speaker notes carry the demo runbook.
+Both decks demo against a local DKAN site (DDEV) with the sample datasets and the [`dkan_ai_query`](https://www.drupal.org/project/dkan_ai_query) / [`dkan_mcp_server`](https://www.drupal.org/project/dkan_mcp_server) modules installed. The Learners Club deck demos twice: Claude Code over stdio, then [MCP Dojo](https://mcpdojo.dev) ([repo](https://github.com/dcgoodwin2112/mcp-dojo)) over HTTP; its speaker notes carry both runbooks.

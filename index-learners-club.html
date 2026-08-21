@@ -502,8 +502,8 @@
           <h1>Tools, Resources, Prompts</h1>
           <hr class="rule" />
           <p class="lead">
-            MCP from the ground up, then live on DKAN — with a hands-on tour in
-            MCP Dojo.
+            MCP from the ground up, then live on DKAN — in Claude Code, and
+            hands-on in MCP Dojo.
           </p>
           <p style="margin-top: 1.2em">
             <strong>Dan Goodwin</strong> · Sr. Front End Developer ·
@@ -671,8 +671,8 @@
           </div>
           <p style="margin-top: 0.8em">
             Same messages, same tools, same behavior — the transport is
-            <strong>plumbing, not semantics</strong>. Today's demo uses HTTP;
-            the module ships both.
+            <strong>plumbing, not semantics</strong>. You'll see both today:
+            Claude Code over stdio, MCP Dojo over HTTP.
           </p>
           <div class="chips" style="margin-top: 0.5em">
             <span class="chip ghost">clients you may already have:</span>
@@ -1275,7 +1275,8 @@ final class SearchDatasetsTool extends SearchToolBase {
             mapped to different Drupal roles.
           </p>
           <p class="accent">
-            <strong>You'll watch this diff live in about five minutes.</strong>
+            <strong>You'll meet the read-only persona in Claude Code first —
+              then watch this diff live in MCP Dojo.</strong>
           </p>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
@@ -1332,12 +1333,56 @@ final class SearchDatasetsTool extends SearchToolBase {
         </section>
 
         <!-- ==================================================== -->
-        <!-- ============ ACT 3 · MCP DOJO DEMO ================= -->
+        <!-- ============ ACT 3 · DEMOS ========================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 20. MEET MCP DOJO ============ -->
+        <!-- ============ 20. LIVE DEMO · CLAUDE CODE ============ -->
+        <section class="pop" data-background-color="#F4F4F5">
+          <span class="demo-badge">● Live demo</span>
+          <h2 style="margin-top: 0.4em">
+            An agent explores the site like a new hire
+          </h2>
+          <hr class="rule" />
+          <p class="small muted">
+            Claude Code, connected over stdio (its terminal, not the network) ·
+            <code>drush dkan-mcp-server:serve</code>
+          </p>
+          <ul class="prompts">
+            <li>
+              List the DKAN tools you have access to. As we go, tell me which
+              ones you use.
+            </li>
+            <li>What's on this site?</li>
+            <li>What do we know about bears?</li>
+            <li>Break sightings down by bear weight</li>
+            <li>How did this data get onto the site?</li>
+          </ul>
+          <p class="small muted" style="margin-top: 0.6em">
+            It works in a client you already have — but every hop is invisible.
+            Next: a client built to show them.
+          </p>
+          <aside class="notes">
+            Demo runbook — the agent finds the bear dataset cold. Beat 0: the
+            tool inventory — 25 read tools on this anonymous stdio connection;
+            the 13 writes aren't just blocked, they're invisible — the
+            permissions slide, live. From here on the agent narrates which
+            tools it uses, so every later beat self-documents. Beat 1:
+            get_site_status + get_catalog for orientation. Beat 2:
+            search_datasets("bear") → get_dataset → get_datastore_schema →
+            query_datastore with a grouping (totals by region — Southeast
+            leads); the sanity_flags block marks partial answers (row_cap_hit,
+            coverage_warning). Beat 3: "bear weight" isn't a real column — the
+            tool returns unknown_column + available_columns and the agent
+            recovers next turn. Beat 4: the harvest tools (get_harvest_plan /
+            get_harvest_runs). Fallback: the shipped explore_dataset MCP
+            prompt scripts this exploration. The closing line is the bridge:
+            Claude Code proves it works; MCP Dojo shows how.
+          </aside>
+        </section>
+
+        <!-- ============ 21. MEET MCP DOJO ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">The demo · the client</span>
+          <span class="kicker">Demo 2 · the client</span>
           <h2>Meet MCP Dojo</h2>
           <hr class="rule" />
           <p class="lead">
@@ -1379,9 +1424,9 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 21. DEMO MAP ============ -->
+        <!-- ============ 22. DEMO MAP ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">The demo · the map</span>
+          <span class="kicker">Demo 2 · the map</span>
           <h2>The demo map — every concept from Act&nbsp;1</h2>
           <hr class="rule" />
           <table class="mini" style="font-size: 0.74em; margin-top: 0.3em">
@@ -1442,7 +1487,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 22. LIVE DEMO ============ -->
+        <!-- ============ 23. LIVE DEMO ============ -->
         <section class="pop" data-background-color="#F4F4F5">
           <span class="demo-badge">● Live demo</span>
           <h2 style="margin-top: 0.4em">MCP Dojo × dkan_mcp_server</h2>
@@ -1491,9 +1536,9 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 23. WHAT YOU JUST SAW ============ -->
+        <!-- ============ 24. WHAT YOU JUST SAW ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">The demo · debrief</span>
+          <span class="kicker">The demos · debrief</span>
           <h2>What you just saw</h2>
           <hr class="rule" />
           <table class="mini" style="font-size: 0.8em; margin-top: 0.4em">
@@ -1532,11 +1577,16 @@ final class SearchDatasetsTool extends SearchToolBase {
               <td>the raw drawer</td>
               <td class="accent">✓</td>
             </tr>
+            <tr>
+              <td>Two transports, same protocol</td>
+              <td>Claude Code over stdio · MCP Dojo over HTTP</td>
+              <td class="accent">✓</td>
+            </tr>
           </table>
           <p class="accent" style="margin-top: 0.8em">
             <strong
               >That's the whole protocol — handshake, three primitives,
-              permissions, errors, wire.</strong
+              permissions, errors, transports, wire.</strong
             >
           </p>
           <div class="slide-footer">
@@ -1548,7 +1598,7 @@ final class SearchDatasetsTool extends SearchToolBase {
         <!-- ============ ACT 4 · CLOSE ========================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 24. TAKEAWAYS ============ -->
+        <!-- ============ 25. TAKEAWAYS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close</span>
           <h2>Three things to take home</h2>
@@ -1588,7 +1638,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </div>
         </section>
 
-        <!-- ============ 25. WHERE THIS IS HEADING ============ -->
+        <!-- ============ 26. WHERE THIS IS HEADING ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close · if we have time</span>
           <h2>Where this is heading</h2>
@@ -1618,7 +1668,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 26. THANK YOU / Q&A ============ -->
+        <!-- ============ 27. THANK YOU / Q&A ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Thank you</span>
           <h1>Questions?</h1>

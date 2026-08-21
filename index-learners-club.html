@@ -621,33 +621,27 @@
             <li>
               The <strong>host</strong> is the AI app (Claude Code, an IDE, a
               chat UI); it holds the model and runs the
-              <strong>agent loop</strong>:
-            </li>
-            <li class="small" style="list-style: none">
-              <span class="muted"
-                >your question + the tool list go to the model → the model asks
-                for a tool call → the host executes it → the result goes back
-                to the model → repeat until it can answer.</span
-              >
+              <strong>agent loop</strong>.
             </li>
             <li>
               The <strong>server</strong> exposes capabilities. It has
               <strong>no AI model in it</strong> — it just answers requests.
             </li>
             <li>
-              Hosts usually run <strong>several servers at once</strong> — one
-              client per connection; the model sees all their tools merged into
-              one list.
-            </li>
-            <li>
-              Under the hood: <strong>JSON-RPC 2.0</strong> messages. You
-              rarely write protocol code — SDKs (TypeScript, Python,
-              <strong>PHP</strong>…) handle it.
+              Hosts usually run <strong>several servers at once</strong> — the
+              model sees all their tools merged into one list.
             </li>
           </ul>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
+          <aside class="notes">
+            Narrate the agent loop rather than showing it: your question plus
+            the tool list go to the model, the model asks for a tool call, the
+            host executes it, the result goes back to the model — repeat until
+            it can answer. Under the hood it's JSON-RPC 2.0, but you rarely
+            write protocol code — SDKs (TypeScript, Python, PHP…) handle it.
+          </aside>
         </section>
 
         <!-- ============ 5. TRANSPORTS ============ -->
@@ -688,15 +682,15 @@
             <span class="chip">Cursor</span>
             <span class="chip">MCP Dojo</span>
           </div>
-          <p class="small muted" style="margin: 0.5em 0 0.1em">
-            Wiring a server into a client is a few lines of config —
-            <code>.mcp.json</code> in Claude Code:
-          </p>
-          <pre style="font-size: 0.5em"><code class="language-json" data-trim>{ "mcpServers": { "dkan": {
-    "command": "ddev", "args": ["drush", "dkan-mcp-server:serve"] } } }</code></pre>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
+          <aside class="notes">
+            If asked how wiring works: a few lines of config — in Claude Code,
+            a .mcp.json entry with the command to launch (e.g. ddev drush
+            dkan-mcp-server:serve) or the HTTP URL. The takeaways slide has
+            the links.
+          </aside>
         </section>
 
         <!-- ============ 6. LIFECYCLE ============ -->
@@ -714,8 +708,7 @@
           <ul style="margin-top: 0.8em">
             <li>
               <code>initialize</code> negotiates versions and
-              <strong>capabilities</strong> <em>(which optional features each
-              side supports)</em>, and can return an
+              <strong>capabilities</strong>, and can return an
               <code>instructions</code> string — the server briefing the model
               on how to use it.
             </li>
@@ -875,8 +868,7 @@
             <li>
               The app can <strong>read</strong> one (just look) or
               <strong>attach</strong> it to the conversation's
-              <strong>context</strong> — everything the model gets to see when
-              it answers
+              <strong>context</strong>
             </li>
           </ul>
           <p style="margin-top: 0.7em">
@@ -972,10 +964,6 @@
             Plus a <strong>lifecycle</strong> (initialize → discover → call)
             and <strong>two transports</strong>. That's the server side of the
             protocol.
-          </p>
-          <p class="small muted">
-            (MCP also defines three <em>client-side</em> primitives — sampling,
-            roots, elicitation — rarer in the wild; ask me in Q&amp;A.)
           </p>
           <p class="accent">
             <strong>Now let's ground every one of these in a real server.</strong>
@@ -1129,11 +1117,8 @@
                 <span class="chip red">13 write</span>
               </p>
               <p class="small">
-                metastore 9 · datastore 8 · harvest 7 · write 10 ·
-                status/search 4
-              </p>
-              <p class="small muted">
-                13 = 10 write + 3 harvest tools that also write
+                covering metastore, datastore, harvest, search, and site
+                status
               </p>
             </div>
             <div class="col card blue">
@@ -1158,8 +1143,9 @@
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
           <aside class="notes">
-            Bookkeeping if asked: 25 + 13 vs. the group counts — three of the
-            harvest tools (register/run/deregister) are also writes. The card
+            Bookkeeping if asked: metastore 9 · datastore 8 · harvest 7 ·
+            write 10 · status/search 4; the 13 writes = 10 write tools + 3
+            harvest tools (register/run/deregister) that also write. The card
             colors deliberately match slide 7 (tools red = model, resources
             blue = app, prompts gold = user).
           </aside>
@@ -1234,8 +1220,7 @@ final class SearchDatasetsTool extends SearchToolBase {
                 </li>
                 <li>
                   <code>execute()</code> is <strong>thin</strong>: it forwards
-                  to a plain Drupal service (<code>dkan_query_tools</code>) —
-                  <code>$gateway</code> is the caller's channel, unused here
+                  to a plain Drupal service (<code>dkan_query_tools</code>)
                 </li>
                 <li>
                   Base classes supply DI + defaults; logic stays testable
@@ -1337,10 +1322,9 @@ final class SearchDatasetsTool extends SearchToolBase {
             </div>
           </div>
           <p class="small muted" style="margin-top: 0.5em">
-            The whole design assumes tokens cost money — and the
-            <strong>client pays too</strong>: every connected tool's schema
-            rides along on every model call, which is why hosts offer tool
-            toggles. Watch the context-growth meter in the demo.
+            The <strong>client pays too</strong>: every connected tool's schema
+            rides along on every model call. Watch the context-growth meter in
+            the demo.
           </p>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026

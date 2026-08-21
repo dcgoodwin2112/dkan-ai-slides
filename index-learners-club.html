@@ -783,9 +783,72 @@
           </aside>
         </section>
 
-        <!-- ============ 8. TOOLS ============ -->
+        <!-- ============ 8. CLIENT-SIDE PRIMITIVES ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">Primitive 1 of 3 · model-controlled</span>
+          <span class="kicker">MCP fundamentals · the full picture</span>
+          <h2>Three more primitives — running the other way</h2>
+          <hr class="rule" />
+          <p class="lead">
+            MCP also defines three <strong>client-side</strong> primitives.
+            These flip the arrow: the <em>server</em> initiates, the client
+            answers.
+          </p>
+          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
+            <div class="col card red">
+              <h3>Sampling</h3>
+              <p class="small">
+                The server asks the client to <strong>run a model
+                call</strong> — borrowing the host's LLM instead of shipping
+                its own.
+              </p>
+            </div>
+            <div class="col card blue">
+              <h3>Elicitation</h3>
+              <p class="small">
+                The server asks the <strong>human</strong> for structured
+                input mid-operation — confirm, fill in a form, or cancel.
+              </p>
+            </div>
+            <div class="col card">
+              <h3>Roots</h3>
+              <p class="small">
+                The client tells the server <strong>what's in scope</strong> —
+                which locations it should work within.
+              </p>
+            </div>
+          </div>
+          <p class="small muted" style="margin-top: 0.7em">
+            Two are as old as MCP itself; elicitation arrived mid-2025. Client
+            support is only now catching up.
+          </p>
+          <p class="accent">
+            <strong>Today we build on the server three — they're what you
+              implement first, and what the demo shows.</strong>
+          </p>
+          <div class="slide-footer">
+            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
+          </div>
+          <aside class="notes">
+            Detail for Q&amp;A: sampling (sampling/createMessage) sends
+            messages + model preferences; the host runs them through its own
+            model with human oversight — a server gets LLM power with no API
+            key of its own. Elicitation (elicitation/create, added in the
+            June 2025 spec revision) carries a flat JSON schema the client
+            renders as a form; responses are accept / decline / cancel.
+            Roots (roots/list) are URIs — classically file:// project
+            directories — with a change notification. Sampling and roots
+            shipped with the first spec (Nov 2024) — what's new is clients
+            actually implementing them; adoption lagged the spec for years.
+            DKAN-flavored examples: sampling = the server summarizing a
+            dataset with *your* model; elicitation = update_dataset asking
+            you to confirm fields before committing; roots = scoping an
+            agent to one catalog. The close slide picks this thread back up.
+          </aside>
+        </section>
+
+        <!-- ============ 9. TOOLS ============ -->
+        <section data-background-color="#162E51">
+          <span class="kicker">Server primitive 1 of 3 · model-controlled</span>
           <h2>Tools</h2>
           <hr class="rule" />
           <div class="cols">
@@ -846,9 +909,9 @@
           </aside>
         </section>
 
-        <!-- ============ 9. RESOURCES ============ -->
+        <!-- ============ 10. RESOURCES ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">Primitive 2 of 3 · app-controlled</span>
+          <span class="kicker">Server primitive 2 of 3 · app-controlled</span>
           <h2>Resources</h2>
           <hr class="rule" />
           <p class="lead">
@@ -887,9 +950,9 @@
           </aside>
         </section>
 
-        <!-- ============ 10. PROMPTS ============ -->
+        <!-- ============ 11. PROMPTS ============ -->
         <section data-background-color="#162E51">
-          <span class="kicker">Primitive 3 of 3 · user-controlled</span>
+          <span class="kicker">Server primitive 3 of 3 · user-controlled</span>
           <h2>Prompts</h2>
           <hr class="rule" />
           <p class="lead">
@@ -929,7 +992,7 @@
           </aside>
         </section>
 
-        <!-- ============ 11. CHECKPOINT ============ -->
+        <!-- ============ 12. CHECKPOINT ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">MCP fundamentals · checkpoint</span>
           <h2>The whole mental model, one table</h2>
@@ -972,14 +1035,9 @@
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
           <aside class="notes">
-            Client-side primitives, if asked: sampling — the server asks the
-            client's model to generate something (the server borrows the
-            host's LLM instead of shipping its own); roots — the client tells
-            the server which locations are in scope (e.g. which project
-            directories); elicitation — the server asks the human for
-            structured input mid-operation. All three invert the direction:
-            the server initiates, the client serves. Few clients implement
-            them fully, which is why the talk stays on the server three.
+            If client-side primitives come up here, point back to the
+            mirror-set slide — the table stays server-side deliberately, and
+            the close slide picks the thread back up.
           </aside>
         </section>
 
@@ -987,7 +1045,7 @@
         <!-- ============ ACT 2 · APPLIED: DKAN ================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 12. OPEN DATA FIT ============ -->
+        <!-- ============ 13. OPEN DATA FIT ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the use case</span>
           <h2>Why open data is a natural fit</h2>
@@ -1032,7 +1090,7 @@
           </aside>
         </section>
 
-        <!-- ============ 13. WHAT DKAN IS ============ -->
+        <!-- ============ 14. WHAT DKAN IS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the platform</span>
           <h2>What DKAN is</h2>
@@ -1071,7 +1129,7 @@
           </div>
         </section>
 
-        <!-- ============ 14. METASTORE + DATASTORE ============ -->
+        <!-- ============ 15. METASTORE + DATASTORE ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the platform</span>
           <h2>Two halves: Metastore &amp; Datastore</h2>
@@ -1104,7 +1162,7 @@
           </div>
         </section>
 
-        <!-- ============ 15. DKAN AS AN MCP SERVER ============ -->
+        <!-- ============ 16. DKAN AS AN MCP SERVER ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · dkan_mcp_server</span>
           <h2>DKAN as an MCP server — all three primitives</h2>
@@ -1151,7 +1209,7 @@
           </aside>
         </section>
 
-        <!-- ============ 16. BUILT ON MCP_SERVER ============ -->
+        <!-- ============ 17. BUILT ON MCP_SERVER ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · under the hood</span>
           <h2>Built on contrib <code style="font-size: 0.9em">mcp_server</code></h2>
@@ -1183,7 +1241,7 @@
           </div>
         </section>
 
-        <!-- ============ 17. TOOL PLUGIN (CODE) ============ -->
+        <!-- ============ 18. TOOL PLUGIN (CODE) ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the one code slide</span>
           <h2>One tool = one attribute plugin</h2>
@@ -1241,7 +1299,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 18. PERMISSIONS ============ -->
+        <!-- ============ 19. PERMISSIONS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · access control</span>
           <h2>Same server, two connections</h2>
@@ -1290,7 +1348,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 19. AGENT-FRIENDLY DESIGN ============ -->
+        <!-- ============ 20. AGENT-FRIENDLY DESIGN ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · design for agents</span>
           <h2>Designed for a caller that pays per token</h2>
@@ -1336,7 +1394,7 @@ final class SearchDatasetsTool extends SearchToolBase {
         <!-- ============ ACT 3 · DEMOS ========================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 20. LIVE DEMO · CLAUDE CODE ============ -->
+        <!-- ============ 21. LIVE DEMO · CLAUDE CODE ============ -->
         <section class="pop" data-background-color="#F4F4F5">
           <span class="demo-badge">● Live demo</span>
           <h2 style="margin-top: 0.4em">
@@ -1380,7 +1438,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 21. MEET MCP DOJO ============ -->
+        <!-- ============ 22. MEET MCP DOJO ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Demo 2 · the client</span>
           <h2>Meet MCP Dojo</h2>
@@ -1424,7 +1482,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 22. DEMO MAP ============ -->
+        <!-- ============ 23. DEMO MAP ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Demo 2 · the map</span>
           <h2>The demo map — every concept from Act&nbsp;1</h2>
@@ -1487,7 +1545,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 23. LIVE DEMO ============ -->
+        <!-- ============ 24. LIVE DEMO ============ -->
         <section class="pop" data-background-color="#F4F4F5">
           <span class="demo-badge">● Live demo</span>
           <h2 style="margin-top: 0.4em">MCP Dojo × dkan_mcp_server</h2>
@@ -1536,7 +1594,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 24. WHAT YOU JUST SAW ============ -->
+        <!-- ============ 25. WHAT YOU JUST SAW ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">The demos · debrief</span>
           <h2>What you just saw</h2>
@@ -1598,7 +1656,7 @@ final class SearchDatasetsTool extends SearchToolBase {
         <!-- ============ ACT 4 · CLOSE ========================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 25. TAKEAWAYS ============ -->
+        <!-- ============ 26. TAKEAWAYS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close</span>
           <h2>Three things to take home</h2>
@@ -1638,7 +1696,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </div>
         </section>
 
-        <!-- ============ 26. WHERE THIS IS HEADING ============ -->
+        <!-- ============ 27. WHERE THIS IS HEADING ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close · if we have time</span>
           <h2>Where this is heading</h2>
@@ -1655,8 +1713,9 @@ final class SearchDatasetsTool extends SearchToolBase {
               <code>dkan_mcp_server</code> is a working example today
             </li>
             <li>
-              MCP Dojo's roadmap: side-by-side protocol versions, a guided
-              lesson mode, challenge exercises verified against the event log
+              The <strong>client-side primitives</strong> from Act 1 —
+              sampling, elicitation, roots — are finally landing in real
+              clients; expect servers to start leaning on them
             </li>
           </ul>
           <div class="slide-footer">
@@ -1668,7 +1727,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 27. THANK YOU / Q&A ============ -->
+        <!-- ============ 28. THANK YOU / Q&A ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Thank you</span>
           <h1>Questions?</h1>

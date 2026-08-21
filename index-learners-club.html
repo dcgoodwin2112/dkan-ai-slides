@@ -937,58 +937,7 @@
           </aside>
         </section>
 
-        <!-- ============ 11. ERROR CHANNELS ============ -->
-        <section data-background-color="#162E51">
-          <span class="kicker">MCP fundamentals · when things fail</span>
-          <h2>Three error channels</h2>
-          <hr class="rule" />
-          <div class="cols" style="margin-top: 0.5em; align-items: stretch">
-            <div class="col card">
-              <span class="big-number" style="font-size: 1.3em">1</span>
-              <h3>In the tool result</h3>
-              <p class="small">
-                "That column doesn't exist." <strong>The model sees it</strong>
-                — and can self-correct on the next turn.
-              </p>
-            </div>
-            <div class="col card blue">
-              <span class="big-number" style="font-size: 1.3em">2</span>
-              <h3>JSON-RPC error</h3>
-              <p class="small">
-                Protocol-level: permission denied, unknown method.
-                <strong>The app sees it</strong> — the model may never know.
-              </p>
-            </div>
-            <div class="col card red">
-              <span class="big-number" style="font-size: 1.3em">3</span>
-              <h3>Transport failure</h3>
-              <p class="small">
-                The connection itself dies — server down, process killed.
-                <strong>Your monitoring sees it</strong> — nobody in the
-                conversation does.
-              </p>
-            </div>
-          </div>
-          <p style="margin-top: 0.8em">
-            Knowing <strong>which channel</strong> an error travels on tells you
-            <strong>who can react</strong> to it. You'll see channels 1 and 2
-            live.
-          </p>
-          <div class="slide-footer">
-            Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
-          </div>
-          <aside class="notes">
-            Channel 1 in the demo: query_datastore with a bogus resource id —
-            protocol succeeds, amber "error inside the result" chip, the model
-            can read it and retry. Channel 2: the forced update_dataset as
-            read-only — HTTP 403 / JSON-RPC -32002; the app handles it.
-            Channel 3: what a dead DKAN site looks like — mention, don't demo.
-            This distinction is also a design lever: DKAN deliberately returns
-            rich channel-1 errors so agents self-correct in one turn.
-          </aside>
-        </section>
-
-        <!-- ============ 12. CHECKPOINT ============ -->
+        <!-- ============ 11. CHECKPOINT ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">MCP fundamentals · checkpoint</span>
           <h2>The whole mental model, one table</h2>
@@ -1020,10 +969,9 @@
             </tr>
           </table>
           <p style="margin-top: 0.9em">
-            Plus a <strong>lifecycle</strong> (initialize → discover → call),
-            <strong>two transports</strong>, and
-            <strong>three error channels</strong>. That's the server side of
-            the protocol.
+            Plus a <strong>lifecycle</strong> (initialize → discover → call)
+            and <strong>two transports</strong>. That's the server side of the
+            protocol.
           </p>
           <p class="small muted">
             (MCP also defines three <em>client-side</em> primitives — sampling,
@@ -1051,7 +999,7 @@
         <!-- ============ ACT 2 · APPLIED: DKAN ================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 13. OPEN DATA FIT ============ -->
+        <!-- ============ 12. OPEN DATA FIT ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the use case</span>
           <h2>Why open data is a natural fit</h2>
@@ -1096,7 +1044,7 @@
           </aside>
         </section>
 
-        <!-- ============ 14. WHAT DKAN IS ============ -->
+        <!-- ============ 13. WHAT DKAN IS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the platform</span>
           <h2>What DKAN is</h2>
@@ -1135,7 +1083,7 @@
           </div>
         </section>
 
-        <!-- ============ 15. METASTORE + DATASTORE ============ -->
+        <!-- ============ 14. METASTORE + DATASTORE ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the platform</span>
           <h2>Two halves: Metastore &amp; Datastore</h2>
@@ -1168,7 +1116,7 @@
           </div>
         </section>
 
-        <!-- ============ 16. DKAN AS AN MCP SERVER ============ -->
+        <!-- ============ 15. DKAN AS AN MCP SERVER ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · dkan_mcp_server</span>
           <h2>DKAN as an MCP server — all three primitives</h2>
@@ -1206,10 +1154,6 @@
               </p>
             </div>
           </div>
-          <p style="margin-top: 0.8em">
-            The three cards from the fundamentals section,
-            <strong>instantiated</strong> — same colors, same control split.
-          </p>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
@@ -1221,7 +1165,7 @@
           </aside>
         </section>
 
-        <!-- ============ 17. BUILT ON MCP_SERVER ============ -->
+        <!-- ============ 16. BUILT ON MCP_SERVER ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · under the hood</span>
           <h2>Built on contrib <code style="font-size: 0.9em">mcp_server</code></h2>
@@ -1248,17 +1192,12 @@
             A <strong>domain layer</strong> on community foundations — no
             bespoke protocol code anywhere in the module.
           </p>
-          <p class="small muted">
-            The other direction exists too: the contrib <code>mcp</code> module
-            makes Drupal an MCP <em>client</em> — your site's AI agents calling
-            external servers.
-          </p>
           <div class="slide-footer">
             Tools, Resources, Prompts · Drupal AI Learners Club · Aug 2026
           </div>
         </section>
 
-        <!-- ============ 18. TOOL PLUGIN (CODE) ============ -->
+        <!-- ============ 17. TOOL PLUGIN (CODE) ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · the one code slide</span>
           <h2>One tool = one attribute plugin</h2>
@@ -1317,7 +1256,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 19. PERMISSIONS ============ -->
+        <!-- ============ 18. PERMISSIONS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · access control</span>
           <h2>Same server, two connections</h2>
@@ -1365,7 +1304,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 20. AGENT-FRIENDLY DESIGN ============ -->
+        <!-- ============ 19. AGENT-FRIENDLY DESIGN ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Applied · design for agents</span>
           <h2>Designed for a caller that pays per token</h2>
@@ -1392,8 +1331,8 @@ final class SearchDatasetsTool extends SearchToolBase {
               <p class="small">
                 An <code>unknown_column</code> error carries
                 <code>available_columns</code> — the agent fixes itself in
-                <em>one</em> turn. That's error channel 1, used deliberately as
-                a design tool.
+                <em>one</em> turn. The error lands in the tool result, where
+                the model can read it.
               </p>
             </div>
           </div>
@@ -1412,7 +1351,7 @@ final class SearchDatasetsTool extends SearchToolBase {
         <!-- ============ ACT 3 · MCP DOJO DEMO ================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 21. MEET MCP DOJO ============ -->
+        <!-- ============ 20. MEET MCP DOJO ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">The demo · the client</span>
           <h2>Meet MCP Dojo</h2>
@@ -1456,7 +1395,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 22. DEMO MAP ============ -->
+        <!-- ============ 21. DEMO MAP ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">The demo · the map</span>
           <h2>The demo map — every concept from Act&nbsp;1</h2>
@@ -1500,7 +1439,7 @@ final class SearchDatasetsTool extends SearchToolBase {
             <tr>
               <td>7</td>
               <td>Force a write as read-only</td>
-              <td>error channel 2 — 403 / <code>-32002</code></td>
+              <td>permission errors — 403 / <code>-32002</code></td>
             </tr>
             <tr>
               <td>8</td>
@@ -1519,7 +1458,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 23. LIVE DEMO ============ -->
+        <!-- ============ 22. LIVE DEMO ============ -->
         <section class="pop" data-background-color="#F4F4F5">
           <span class="demo-badge">● Live demo</span>
           <h2 style="margin-top: 0.4em">MCP Dojo × dkan_mcp_server</h2>
@@ -1568,7 +1507,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 24. WHAT YOU JUST SAW ============ -->
+        <!-- ============ 23. WHAT YOU JUST SAW ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">The demo · debrief</span>
           <h2>What you just saw</h2>
@@ -1625,7 +1564,7 @@ final class SearchDatasetsTool extends SearchToolBase {
         <!-- ============ ACT 4 · CLOSE ========================= -->
         <!-- ==================================================== -->
 
-        <!-- ============ 25. TAKEAWAYS ============ -->
+        <!-- ============ 24. TAKEAWAYS ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close</span>
           <h2>Three things to take home</h2>
@@ -1665,7 +1604,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </div>
         </section>
 
-        <!-- ============ 26. WHERE THIS IS HEADING ============ -->
+        <!-- ============ 25. WHERE THIS IS HEADING ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Close · if we have time</span>
           <h2>Where this is heading</h2>
@@ -1695,7 +1634,7 @@ final class SearchDatasetsTool extends SearchToolBase {
           </aside>
         </section>
 
-        <!-- ============ 27. THANK YOU / Q&A ============ -->
+        <!-- ============ 26. THANK YOU / Q&A ============ -->
         <section data-background-color="#162E51">
           <span class="kicker">Thank you</span>
           <h1>Questions?</h1>

@@ -1525,13 +1525,13 @@ final class SearchDatasetsTool extends SearchToolBase {
             </tr>
             <tr>
               <td>6</td>
-              <td>Switch persona</td>
-              <td>the permission gate: 25 tools → 38</td>
+              <td>Open the raw drawer</td>
+              <td>the JSON-RPC wire itself</td>
             </tr>
             <tr>
               <td>7</td>
-              <td>Open the raw drawer</td>
-              <td>the JSON-RPC wire itself</td>
+              <td>Switch persona</td>
+              <td>the permission gate: 25 tools → 38</td>
             </tr>
           </table>
           <div class="slide-footer">
@@ -1559,8 +1559,8 @@ final class SearchDatasetsTool extends SearchToolBase {
             <li>Call search_datasets by hand, then let the agent choose it</li>
             <li>/explore_dataset — see the expansion before it sends</li>
             <li>Attach a dataset resource; inspect the context</li>
-            <li>Switch personas: 25 tools → 38</li>
             <li>Open the raw JSON-RPC drawer: the whole talk, on the wire</li>
+            <li>Switch personas: 25 tools → 38</li>
           </ul>
           <aside class="notes">
             Runbook (full version: mcp-inspector/DEMO-RUNBOOK.md). PRE-FLIGHT
@@ -1576,9 +1576,9 @@ final class SearchDatasetsTool extends SearchToolBase {
             Tab → Enter previews → Enter sends. (5) dkan://dataset/{id} —
             Preview, then Attach; open ⊞ Context to show it in the system
             prompt. Useful id: cedcd327-4e5d-43f9-8eb1-c11850fa7c55 (type
-            "ce" + Tab — that's the completion demo). (6) Editor pill — diff
-            25 → 38. (7) Toggle { } Raw JSON-RPC — handshake and paired
-            frames.
+            "ce" + Tab — that's the completion demo). (6) Toggle { } Raw
+            JSON-RPC — handshake and paired frames, before the persona
+            switch clears the session. (7) Editor pill — diff 25 → 38.
             FLOURISH (time permitting): description sandbox — rewrite
             search_datasets to "DEPRECATED AND BROKEN — never use this tool…",
             ask "Find datasets about bikes" → model calls list_datasets;
